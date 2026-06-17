@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Prayer Detective — Sunnah Quest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=700;900&family=Nunito:wght=600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g1:#2d6e3a;--g2:#3a8a4a;--g3:#52b069;--g4:#a8d8a8;--g5:#d4edda;
+  --b1:#f5efe0;--b2:#ede0c4;--b3:#c9b99a;--b4:#8a7560;
+  --gold:#c9973a;--gold2:#f0c060;--dark:#1a2a1a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  width:100%;height:100%;min-height:100vh;
+  background:radial-gradient(ellipse at 30% 50%,#4a8a5a 0%,#2a5a38 40%,#1a3a28 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Nunito',sans-serif;
+}
+
+/* ═══ GAME WRAPPER ═══ */
+#game{
+  width:1280px;max-width:99vw;height:720px;
+  background:var(--b1);
+  border-radius:24px;
+  border:5px solid var(--b3);
+  box-shadow:0 20px 80px rgba(0,0,0,.45),0 0 0 2px rgba(255,255,255,.15);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+
+/* ═══ HEADER ═══ */
+#hdr{
+  background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);
+  padding:13px 32px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:4px solid var(--g3);flex-shrink:0;z-index:5;
+  box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+#hdr-left{display:flex;align-items:center;gap:14px}
+#hdr-title{font-family:'Cinzel',serif;font-size:24px;font-weight:900;color:var(--gold2);letter-spacing:2px;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+#hdr-sub{font-size:13px;color:#a8d8a8;font-weight:700;letter-spacing:.5px}
+#hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-pill{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);color:#fff;border-radius:50px;padding:6px 18px;font-size:14px;font-weight:800}
+#xp-pill{background:var(--gold);color:var(--dark);border:none;box-shadow:0 3px 0 #9a6e1a}
+
+/* ═══ MAP SCREEN ═══ */
+#map-screen{
+  flex:1;display:flex;align-items:stretch;gap:0;overflow:hidden;
+  position:relative;z-index:1;
+}
+
+/* left sidebar */
+#map-sidebar{
+  width:240px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  padding:20px 18px;
+  background:linear-gradient(180deg,var(--g5) 0%,var(--b2) 100%);
+  border-right:3px solid var(--b3);
+}
+#det-anim{animation:bob 2.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+#sidebar-legend{background:#fff;border:2px solid var(--b3);border-radius:14px;padding:12px 14px;width:100%}
+#sidebar-legend h3{font-size:11px;font-weight:900;color:var(--g1);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:9px}
+.leg-row{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:var(--dark);margin-bottom:5px}
+.ldot{width:20px;height:20px;border-radius:50%;flex-shrink:0}
+#map-start-btn{
+  width:100%;background:linear-gradient(135deg,var(--g1),var(--g3));
+  color:#fff;border:none;border-radius:14px;padding:14px 10px;
+  font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;cursor:pointer;
+  box-shadow:0 5px 0 #1a4a28,0 0 16px rgba(58,138,74,.4);
+  transition:transform .1s,box-shadow .1s;letter-spacing:.3px;
+}
+#map-start-btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 #1a4a28}
+#map-start-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #1a4a28}
+
+/* map canvas area */
+#map-area{flex:1;height:100%;position:relative}
+#map-svg{width:100%;height:100%}
+
+/* ═══ QUESTION SCREEN ═══ */
+#q-screen{
+  position:absolute;inset:0;z-index:10;
+  display:none;flex-direction:column;
+  background:var(--b1);
+  animation:slideQ .3s ease-out;
+}
+@keyframes slideQ{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+
+#q-bar{
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  padding:11px 26px;display:flex;align-items:center;gap:14px;flex-shrink:0;
+}
+#q-back{background:#ffffff18;border:1.5px solid #ffffff35;color:#fff;border-radius:9px;padding:6px 14px;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif;font-weight:800}
+#q-back:hover{background:#ffffff28}
+#q-prog-track{flex:1;background:#ffffff1f;border-radius:50px;height:15px;overflow:hidden;border:1.5px solid #ffffff28}
+#q-prog-fill{height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:50px;transition:width .5s;position:relative}
+#q-prog-fill::after{content:'';position:absolute;inset:2px 8px;background:#ffffff30;border-radius:50px}
+#q-hearts{font-size:20px;letter-spacing:3px}
+#q-case-lbl{font-family:'Cinzel',serif;font-size:13px;color:var(--gold2);font-weight:700;white-space:nowrap;letter-spacing:.8px}
+
+#q-body{flex:1;display:flex;overflow:hidden}
+
+/* detective panel */
+#q-det{
+  width:210px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:14px 12px 18px;
+  background:linear-gradient(180deg,var(--g5),var(--b1));
+  border-right:2.5px solid var(--b3);
+}
+#q-det svg{animation:bob 2.8s ease-in-out infinite;filter:drop-shadow(0 10px 20px rgba(30,60,30,.2))}
+#q-det-lbl{margin-top:7px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--g1);letter-spacing:.8px}
+
+/* question panel */
+#q-panel{flex:1;display:flex;flex-direction:column;padding:26px 34px 20px;gap:16px;overflow-y:auto}
+
+#q-card{
+  background:#fff;border:3px solid var(--b3);border-radius:22px;
+  padding:24px 28px;box-shadow:0 6px 24px rgba(30,60,30,.1);
+}
+#q-eyebrow{font-size:11px;font-weight:900;color:var(--g2);text-transform:uppercase;letter-spacing:1.8px;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+#q-text{font-size:22px;font-weight:800;color:var(--dark);line-height:1.55}
+
+/* feedback */
+#q-feedback{border-radius:16px;padding:14px 18px;border:2.5px solid transparent;display:none}
+#q-feedback.ok{display:block;background:#e6f9ec;border-color:var(--g3)}
+#q-feedback.fail{display:block;background:#fde8e8;border-color:#d9534f}
+#fb-head{font-size:16px;font-weight:900;margin-bottom:5px}
+#q-feedback.ok #fb-head{color:var(--g1)}
+#q-feedback.fail #fb-head{color:#b02020}
+#fb-body{font-size:14px;font-weight:700;line-height:1.6}
+#q-feedback.ok #fb-body{color:#1a4a28}
+#q-feedback.fail #fb-body{color:#7a1818}
+
+/* yes/no buttons */
+#q-choices{display:flex;gap:16px}
+.cbtn{
+  flex:1;background:#fff;border:3px solid var(--b3);border-radius:20px;
+  padding:18px 22px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
+  cursor:pointer;color:var(--dark);display:flex;align-items:center;gap:14px;
+  transition:all .15s;box-shadow:0 5px 0 var(--b3);
+}
+.cbtn:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--b3)}
+.cbtn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--b3)}
+.cbtn .ico{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.cbtn.yes .ico{background:#e6f9ec;border:2px solid var(--g3)}
+.cbtn.no  .ico{background:#fde8e8;border:2px solid #e07070}
+.cbtn.yes{border-color:var(--g4)}
+.cbtn.no {border-color:#f0b0b0}
+.cbtn.correct{background:#e6f9ec;border-color:var(--g2);box-shadow:0 5px 0 #1a5a28;animation:popY .3s}
+.cbtn.wrong  {background:#fde8e8;border-color:#d9534f;box-shadow:0 5px 0 #8b1010;animation:shkX .35s}
+@keyframes popY{0%{transform:scale(1)}45%{transform:scale(1.05)}100%{transform:scale(1)}}
+@keyframes shkX{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.cbtn span{font-size:18px;font-weight:900}
+
+#q-next-btn{
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  color:#fff;border:none;border-radius:16px;padding:15px 36px;
+  font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
+  cursor:pointer;box-shadow:0 5px 0 #1a4a28;display:none;
+  align-self:flex-end;transition:transform .1s;letter-spacing:.3px;
+}
+#q-next-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #1a4a28}
+
+/* ═══ END SCREEN ═══ */
+#end-screen{
+  position:absolute;inset:0;z-index:20;display:none;
+  flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,var(--g5) 0%,var(--b1) 60%,var(--b2) 100%);
+  text-align:center;padding:30px;
+  animation:fadeIn .5s ease-out;
+}
+@keyframes fadeIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+#end-chest-area{margin-bottom:10px;animation:chestBounce .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes chestBounce{0%{transform:scale(0) rotate(-18deg)}65%{transform:scale(1.15) rotate(4deg)}100%{transform:scale(1)}}
+#end-title{font-family:'Cinzel',serif;font-size:36px;font-weight:900;color:var(--g1);margin-bottom:6px;text-shadow:0 3px 10px rgba(45,110,58,.2)}
+.end-stars{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
+.estr{font-size:42px;opacity:.2;transition:all .3s}
+.estr.lit{opacity:1;animation:starPop .4s}
+@keyframes starPop{0%{transform:scale(0)}70%{transform:scale(1.4)}100%{transform:scale(1)}}
+#end-score-num{font-size:76px;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 4px 14px rgba(201,151,58,.35)}
+#end-score-sub{font-size:16px;color:var(--g2);font-weight:800;margin-bottom:16px;letter-spacing:.5px}
+#end-msg-box{
+  background:#fff;border:3px solid var(--b3);border-radius:20px;
+  padding:16px 28px;max-width:560px;margin-bottom:22px;
+  box-shadow:0 4px 16px rgba(30,60,30,.1);
+}
+#end-msg{font-size:17px;font-weight:700;color:var(--dark);line-height:1.75}
+
+#end-actions{display:flex;gap:16px;margin-top:10px}
+#end-replay{
+  background:linear-gradient(135deg,var(--g1),var(--g3));
+  color:#fff;border:none;border-radius:18px;padding:15px 40px;
+  font-family:'Nunito',sans-serif;font-size:19px;font-weight:900;
+  cursor:pointer;box-shadow:0 6px 0 #1a4a28,0 0 20px rgba(58,138,74,.35);
+  letter-spacing:.3px;transition:transform .1s;
+}
+#end-replay:active{transform:translateY(4px);box-shadow:0 1px 0 #1a4a28}
+
+#end-next-lesson{
+  background:linear-gradient(135deg,#8a7560,#c9b99a);
+  color:#fff;border:none;border-radius:18px;padding:15px 40px;
+  font-family:'Nunito',sans-serif;font-size:19px;font-weight:900;
+  cursor:pointer;box-shadow:0 6px 0 #5a4a3a;
+  letter-spacing:.3px;transition:transform .1s;
+}
+
+/* confetti */
+.cfp{position:absolute;border-radius:3px;pointer-events:none;animation:cfFall var(--d,1.5s) var(--dl,0s) forwards}
+@keyframes cfFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(300px) rotate(720deg)}}
+
+/* bg dots */
+#bg-dots{position:absolute;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(#a8d8a8 1.5px,transparent 1.5px);background-size:30px 30px;opacity:.15}
+</style>
+</head>
+<body>
+<div id="game">
+  <div id="bg-dots"></div>
+
+  <div id="hdr">
+    <div id="hdr-left">
+      <div>
+        <div id="hdr-title">🔍 Prayer Sunnah Detective</div>
+        <div id="hdr-sub">Yes or No — Uncover the Truth!</div>
+      </div>
+    </div>
+    <div id="hdr-right">
+      <div class="hdr-pill" id="stage-pill">Stage 1 / 10</div>
+      <div class="hdr-pill" id="xp-pill">⭐ 0 XP</div>
+    </div>
+  </div>
+
+  <div id="map-screen">
+    <div id="map-sidebar">
+      <div id="det-anim">
+        <svg width="170" height="214" viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="gSk" cx="50%" cy="35%"><stop offset="0%" stop-color="#fde9b5"/><stop offset="100%" stop-color="#f0c070"/></radialGradient>
+            <radialGradient id="gCt" cx="30%" cy="20%"><stop offset="0%" stop-color="#4a9a58"/><stop offset="100%" stop-color="#2a5a30"/></radialGradient>
+            <radialGradient id="gHt" cx="40%" cy="25%"><stop offset="0%" stop-color="#3a7d44"/><stop offset="100%" stop-color="#1e3e22"/></radialGradient>
+          </defs>
+          <ellipse cx="80" cy="205" rx="42" ry="7" fill="#00000028"/>
+          <rect x="52" y="172" width="22" height="24" rx="8" fill="#1e3e22"/>
+          <rect x="86" y="172" width="22" height="24" rx="8" fill="#1e3e22"/>
+          <ellipse cx="63" cy="194" rx="19" ry="6" fill="#0d2010"/>
+          <ellipse cx="97" cy="194" rx="19" ry="6" fill="#0d2010"/>
+          <path d="M32 106 Q20 138 16 196 L144 196 Q140 138 128 106 L100 96 Q80 109 60 96Z" fill="url(#gCt)"/>
+          <path d="M32 106 Q24 132 22 172 L42 172 Q40 142 50 106Z" fill="#ffffff10"/>
+          <polygon points="65,99 80,127 95,99 80,112" fill="#f5efe0"/>
+          <polygon points="67,106 80,113 67,120" fill="#c9973a"/>
+          <polygon points="93,106 80,113 93,120" fill="#c9973a"/>
+          <circle cx="80" cy="113" r="5.5" fill="#2a5a30"/>
+          <rect x="40" y="122" width="15" height="22" rx="5" fill="#a8d8a8" opacity=".9"/>
+          <rect x="85" y="133" width="36" height="21" rx="6" fill="#c9973a"/>
+          <rect x="87" y="135" width="32" height="17" rx="4" fill="#f0c060"/>
+          <text x="103" y="148" text-anchor="middle" font-family="Cinzel,serif" font-size="8.5" font-weight="700" fill="#2a5a30">BADGE</text>
+          <rect x="69" y="83" width="22" height="21" rx="11" fill="url(#gSk)"/>
+          <ellipse cx="80" cy="64" rx="36" ry="37" fill="url(#gSk)"/>
+          <ellipse cx="44" cy="64" rx="7.5" ry="10" fill="#f0c070"/>
+          <ellipse cx="116" cy="64" rx="7.5" ry="10" fill="#f0c070"/>
+          <ellipse cx="44" cy="64" rx="3.8" ry="5.8" fill="#e0a850" opacity=".6"/>
+          <ellipse cx="80" cy="34" rx="46" ry="9.5" fill="#1e3e22"/>
+          <rect x="40" y="5" width="80" height="32" rx="15" fill="url(#gHt)"/>
+          <rect x="40" y="30" width="80" height="9" rx="3.5" fill="#c9973a"/>
+          <rect x="45" y="33" width="70" height="3" rx="2" fill="#f0c060" opacity=".6"/>
+          <rect x="46" y="9" width="30" height="13" rx="6" fill="#ffffff18"/>
+          <circle cx="102" cy="19" r="13" fill="none" stroke="#f0c060" stroke-width="3.5"/>
+          <circle cx="102" cy="19" r="8" fill="rgba(168,230,200,.35)"/>
+          <line x1="111" y1="29" x2="121" y2="39" stroke="#f0c060" stroke-width="4.5" stroke-linecap="round"/>
+          <ellipse cx="66" cy="62" rx="10.5" ry="11.5" fill="#fff"/>
+          <ellipse cx="94" cy="62" rx="10.5" ry="11.5" fill="#fff"/>
+          <circle cx="67.5" cy="63" r="6.8" fill="#2a5a30"/>
+          <circle cx="95.5" cy="63" r="6.8" fill="#2a5a30"/>
+          <circle cx="68" cy="63.5" r="3.6" fill="#0d2010"/>
+          <circle cx="96" cy="63.5" r="3.6" fill="#0d2010"/>
+          <circle cx="69.5" cy="61.5" r="1.6" fill="#fff"/>
+          <circle cx="97.5" cy="61.5" r="1.6" fill="#fff"/>
+          <path d="M55 50 Q66 44 76 50" stroke="#7a4a10" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M84 50 Q95 44 105 50" stroke="#7a4a10" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="80" cy="73" rx="6.5" ry="4.5" fill="#e0a850"/>
+          <path d="M64 79 Q72 86 80 79 Q88 86 96 79" stroke="#5a2a08" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+          <path d="M69 90 Q80 100 91 90" stroke="#8a4a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="53" cy="75" rx="9.5" ry="6.5" fill="#f0a0a0" opacity=".32"/>
+          <ellipse cx="107" cy="75" rx="9.5" ry="6.5" fill="#f0a0a0" opacity=".32"/>
+          <path d="M32 112 Q14 140 16 172" stroke="#2a5a30" stroke-width="24" stroke-linecap="round" fill="none"/>
+          <path d="M128 112 Q146 140 144 172" stroke="#2a5a30" stroke-width="24" stroke-linecap="round" fill="none"/>
+          <path d="M32 112 Q17 138 19 165" stroke="#3a8a48" stroke-width="8" stroke-linecap="round" fill="none" opacity=".3"/>
+          <ellipse cx="16" cy="175" rx="14" ry="13" fill="url(#gSk)"/>
+          <ellipse cx="144" cy="175" rx="14" ry="13" fill="url(#gSk)"/>
+          <circle cx="136" cy="172" r="17" fill="none" stroke="#f0c060" stroke-width="5"/>
+          <circle cx="136" cy="172" r="11" fill="rgba(168,230,200,.28)"/>
+          <circle cx="130" cy="166" r="4.5" fill="#ffffff30"/>
+          <line x1="147" y1="183" x2="158" y2="195" stroke="#f0c060" stroke-width="6.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div id="sidebar-legend">
+        <h3>Map Legend</h3>
+        <div class="leg-row"><div class="ldot" style="background:#a8d8a8;border:2.5px solid #3a7d44"></div>Completed ✅</div>
+        <div class="leg-row"><div class="ldot" style="background:#f0c060;border:2.5px solid #c9973a;box-shadow:0 0 7px #f0c06099"></div>Active Stage</div>
+        <div class="leg-row"><div class="ldot" style="background:#ede0c4;border:2px solid #c9b99a;opacity:.6"></div>Locked 🔒</div>
+        <div class="leg-row"><div class="ldot" style="background:linear-gradient(135deg,#f0c060,#c9973a);border:2px solid #a07020"></div>Treasure 🏆</div>
+      </div>
+
+      <button id="map-start-btn" onclick="clickStart()">Start Investigation! 🔍</button>
+    </div>
+
+    <div id="map-area">
+      <svg id="map-svg" viewBox="0 0 1000 630" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+  </div>
+
+  <div id="q-screen">
+    <div id="q-bar">
+      <button id="q-back" onclick="showMap()">← Map</button>
+      <div id="q-prog-track"><div id="q-prog-fill" style="width:0%"></div></div>
+      <div id="q-hearts">❤️❤️❤️</div>
+      <div id="q-case-lbl">Case 1 of 10</div>
+    </div>
+    <div id="q-body">
+      <div id="q-det">
+        <svg width="136" height="172" viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="gSk3" cx="50%" cy="35%"><stop offset="0%" stop-color="#fde9b5"/><stop offset="100%" stop-color="#f0c070"/></radialGradient>
+            <radialGradient id="gCt3" cx="30%" cy="20%"><stop offset="0%" stop-color="#4a9a58"/><stop offset="100%" stop-color="#2a5a30"/></radialGradient>
+            <radialGradient id="gHt3" cx="40%" cy="25%"><stop offset="0%" stop-color="#3a7d44"/><stop offset="100%" stop-color="#1e3e22"/></radialGradient>
+          </defs>
+          <ellipse cx="80" cy="205" rx="40" ry="7" fill="#00000022"/>
+          <rect x="52" y="172" width="22" height="24" rx="8" fill="#1e3e22"/>
+          <rect x="86" y="172" width="22" height="24" rx="8" fill="#1e3e22"/>
+          <ellipse cx="63" cy="194" rx="19" ry="6" fill="#0d2010"/>
+          <ellipse cx="97" cy="194" rx="19" ry="6" fill="#0d2010"/>
+          <path d="M32 106 Q20 138 16 196 L144 196 Q140 138 128 106 L100 96 Q80 109 60 96Z" fill="url(#gCt3)"/>
+          <path d="M32 106 Q24 132 22 172 L42 172 Q40 142 50 106Z" fill="#ffffff10"/>
+          <polygon points="65,99 80,127 95,99 80,112" fill="#f5efe0"/>
+          <polygon points="67,106 80,113 67,120" fill="#c9973a"/>
+          <polygon points="93,106 80,113 93,120" fill="#c9973a"/>
+          <circle cx="80" cy="113" r="5" fill="#2a5a30"/>
+          <rect x="40" y="122" width="14" height="20" rx="5" fill="#a8d8a8" opacity=".9"/>
+          <rect x="85" y="133" width="34" height="20" rx="6" fill="#c9973a"/>
+          <rect x="87" y="135" width="30" height="16" rx="4" fill="#f0c060"/>
+          <text x="102" y="147" text-anchor="middle" font-family="Cinzel,serif" font-size="8" font-weight="700" fill="#2a5a30">BADGE</text>
+          <rect x="69" y="83" width="22" height="21" rx="11" fill="url(#gSk3)"/>
+          <ellipse cx="80" cy="64" rx="36" ry="37" fill="url(#gSk3)"/>
+          <ellipse cx="44" cy="64" rx="7.5" ry="10" fill="#f0c070"/>
+          <ellipse cx="116" cy="64" rx="7.5" ry="10" fill="#f0c070"/>
+          <ellipse cx="44" cy="64" rx="3.8" ry="5.8" fill="#e0a850" opacity=".6"/>
+          <ellipse cx="80" cy="34" rx="46" ry="9.5" fill="#1e3e22"/>
+          <rect x="40" y="5" width="80" height="32" rx="15" fill="url(#gHt3)"/>
+          <rect x="40" y="30" width="80" height="9" rx="3.5" fill="#c9973a"/>
+          <rect x="45" y="33" width="70" height="3" rx="2" fill="#f0c060" opacity=".6"/>
+          <rect x="46" y="9" width="28" height="12" rx="6" fill="#ffffff18"/>
+          <circle cx="102" cy="19" r="13" fill="none" stroke="#f0c060" stroke-width="3.5"/>
+          <circle cx="102" cy="19" r="8" fill="rgba(168,230,200,.32)"/>
+          <line x1="111" y1="29" x2="121" y2="39" stroke="#f0c060" stroke-width="4.5" stroke-linecap="round"/>
+          <ellipse cx="66" cy="62" rx="10" ry="11" fill="#fff"/>
+          <ellipse cx="94" cy="62" rx="10" ry="11" fill="#fff"/>
+          <circle cx="67.5" cy="63" r="6.5" fill="#2a5a30"/>
+          <circle cx="95.5" cy="63" r="6.5" fill="#2a5a30"/>
+          <circle cx="68" cy="63.5" r="3.5" fill="#0d2010"/>
+          <circle cx="96" cy="63.5" r="3.5" fill="#0d2010"/>
+          <circle cx="69.5" cy="61.5" r="1.5" fill="#fff"/>
+          <circle cx="97.5" cy="61.5" r="1.5" fill="#fff"/>
+          <path d="M55 50 Q66 44 76 50" stroke="#7a4a10" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path d="M84 50 Q95 44 105 50" stroke="#7a4a10" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="80" cy="73" rx="6.5" ry="4.5" fill="#e0a850"/>
+          <path d="M64 79 Q72 86 80 79 Q88 86 96 79" stroke="#5a2a08" stroke-width="3.8" fill="none" stroke-linecap="round"/>
+          <path d="M69 90 Q80 100 91 90" stroke="#8a4a1a" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="53" cy="75" rx="9" ry="6" fill="#f0a0a0" opacity=".32"/>
+          <ellipse cx="107" cy="75" rx="9" ry="6" fill="#f0a0a0" opacity=".32"/>
+          <path d="M32 112 Q14 140 16 172" stroke="#2a5a30" stroke-width="22" stroke-linecap="round" fill="none"/>
+          <path d="M128 112 Q146 140 144 172" stroke="#2a5a30" stroke-width="22" stroke-linecap="round" fill="none"/>
+          <path d="M32 112 Q17 138 19 165" stroke="#3a8a48" stroke-width="7" stroke-linecap="round" fill="none" opacity=".3"/>
+          <ellipse cx="16" cy="175" rx="14" ry="13" fill="url(#gSk3)"/>
+          <ellipse cx="144" cy="175" rx="14" ry="13" fill="url(#gSk3)"/>
+          <circle cx="136" cy="172" r="17" fill="none" stroke="#f0c060" stroke-width="5"/>
+          <circle cx="136" cy="172" r="11" fill="rgba(168,230,200,.26)"/>
+          <circle cx="130" cy="166" r="4" fill="#ffffff2a"/>
+          <line x1="147" y1="183" x2="158" y2="195" stroke="#f0c060" stroke-width="6.5" stroke-linecap="round"/>
+        </svg>
+        <div id="q-det-lbl">Detective Sunnah</div>
+      </div>
+      <div id="q-panel">
+        <div id="q-card">
+          <div id="q-eyebrow"><span>🔍</span><span>INVESTIGATION QUESTION</span></div>
+          <div id="q-text"></div>
+        </div>
+        <div id="q-feedback"><div id="fb-head"></div><div id="fb-body"></div></div>
+        <div id="q-choices">
+          <button class="cbtn yes" id="btn-yes" onclick="answer(true)">
+            <div class="ico">✅</div><span>Yes — This IS a Sunnah of Prayer</span>
+          </button>
+          <button class="cbtn no" id="btn-no" onclick="answer(false)">
+            <div class="ico">❌</div><span>No — This is NOT a Sunnah</span>
+          </button>
+        </div>
+        <button id="q-next-btn" onclick="nextQ()">Continue Investigation ➜</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="end-screen">
+    <div id="end-chest-area">
+      <svg id="end-svg" width="240" height="200" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div id="end-title"></div>
+    <div class="end-stars">
+      <span class="estr" id="es1">⭐</span>
+      <span class="estr" id="es2">⭐</span>
+      <span class="estr" id="es3">⭐</span>
+    </div>
+    <div id="end-score-num"></div>
+    <div id="end-score-sub"></div>
+    <div id="end-msg-box"><div id="end-msg"></div></div>
+    
+    <div id="end-actions">
+      <button id="end-replay" onclick="restart()">🔄 Play Again</button>
+      <button id="end-next-lesson" onclick="returnToLesson()">↩ Return to Lesson</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QS=[
+  {q:"Is raising both hands to shoulder-level at the opening Takbeer a Sunnah of prayer?",ans:true, ex:"Correct! Raising the hands at the opening Takbeer is a confirmed Sunnah firmly established from the Prophet ﷺ."},
+  {q:"Is the intention (Niyyah) a Sunnah of prayer that can be skipped without harm?",ans:false, ex:"Incorrect! Niyyah is a condition (Shart) for prayer, not a Sunnah. Prayer is completely invalid without it."},
+  {q:"Is the opening supplication (Subhanakallahumma...) after Takbeer a Sunnah?",ans:true, ex:"Correct! This opening du'a, recited silently before Al-Fatihah, is a recommended Sunnah of prayer."},
+  {q:"Is saying 'Ameen' aloud after reciting Al-Fatihah a Sunnah of prayer?",ans:true, ex:"Correct! Saying Ameen is a Sunnah for the imam, the followers, and the one praying alone."},
+  {q:"Is reciting a Surah after Al-Fatihah in the first two Rak'ahs an obligatory pillar?",ans:false, ex:"Incorrect! Reciting a Surah after Al-Fatihah is a recommended Sunnah, not a pillar. Prayer is valid without it."},
+  {q:"Is placing the right hand over the left on the chest during Qiyam (standing) a Sunnah?",ans:true, ex:"Correct! This posture during standing is an established Sunnah from the Prophet ﷺ."},
+  {q:"Is reciting aloud in Fajr, Maghrib, and Isha an obligatory duty (Fard) for the imam?",ans:false, ex:"Incorrect! Reciting aloud in these prayers is a Sunnah, not Fard. Omitting it is disliked but not sinful."},
+  {q:"Is the first Tashahhud in a four-Rak'ah prayer a Sunnah that can be freely skipped?",ans:false, ex:"Incorrect! The first Tashahhud is Wajib (obligatory). Forgetting it requires the prostration of forgetfulness."},
+  {q:"Is sending blessings on the Prophet ﷺ in the first Tashahhud a Sunnah?",ans:true, ex:"Correct! Salawat in the first sitting is Sunnah, but becomes obligatory in the final Tashahhud."},
+  {q:"Is seeking refuge from Shaytan (A'oothu billah) before Al-Fatihah a Sunnah of prayer?",ans:true, ex:"Correct! The Ta'awwudh before recitation is a recommended Sunnah and is not obligatory in prayer."},
+];
+
+const NODES = [
+  {x:90,  y:548}, {x:230, y:460}, {x:370, y:420}, {x:490, y:330}, {x:360, y:238},
+  {x:210, y:182}, {x:350, y:110}, {x:510, y:138}, {x:660, y:100}, {x:780, y:178},
+];
+const TRSR = {x:900, y:108};
+const ICONS = ["🔍","📜","🕌","🌙","📿","⭐","🔑","📖","🏅","🎯"];
+const CFCOLS = ['#f0c060','#52b069','#c9973a','#f5a0a0','#a8d8a8','#e0b860','#7bcfb8','#ffb347'];
+
+let cur=0, score=0, hearts=3;
+
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,txt){
+  const e=document.createElementNS(NS,tag);
+  for(const[k,v] of Object.entries(attrs)) e.setAttribute(k,String(v));
+  if(txt!==undefined) e.textContent=txt;
+  return e;
+}
+
+function drawChest(svg, cx, cy, W, H, done){
+  const lx=cx-W/2;
+  if(done){
+    [100,76,54].forEach((r,i)=>
+      svg.appendChild(el('circle',{cx,cy:cy+H/2,r,fill:'none',stroke:'#f0c060',opacity:.04+i*.03,'stroke-width':12}))
+    );
+    svg.appendChild(el('ellipse',{cx,cy:cy+H+10,rx:W/2+12,ry:10,fill:'#f0c06018'}));
+  }
+  svg.appendChild(el('ellipse',{cx,cy:cy+H+8,rx:W/2-2,ry:7,fill:'#00000030'}));
+  svg.appendChild(el('rect',{x:lx,y:cy,width:W,height:H,rx:9,fill:done?'#7a3e10':'#4a2808',stroke:done?'#3a1a04':'#251204','stroke-width':3.5}));
+  svg.appendChild(el('rect',{x:lx,y:cy,width:W,height:8,rx:'4 4 0 0',fill:done?'#c9973a':'#6a4818'}));
+  svg.appendChild(el('rect',{x:lx,y:cy+H-8,width:W,height:8,rx:'0 0 4 4',fill:done?'#c9973a':'#6a4818'}));
+  
+  svg.appendChild(el('rect',{x:cx-14,y:cy-5,width:28,height:20,rx:5,fill:done?'#f0c060':'#5a3010'}));
+  if(done){
+    svg.appendChild(el('text',{x:cx,y:cy-40,'text-anchor':'middle','font-size':'22'},'✨'));
+  }
+}
+
+function renderMap(){
+  const svg = document.getElementById("map-svg");
+  if (!svg) return;
+  svg.innerHTML = "";
+
+  for(let i=0; i<NODES.length-1; i++){
+    svg.appendChild(el('line',{
+      x1:NODES[i].x, y1:NODES[i].y, x2:NODES[i+1].x, y2:NODES[i+1].y,
+      stroke: i < cur ? '#a8d8a8' : '#c9b99a', 'stroke-width':6, 'stroke-dasharray': i < cur ? 'none' : '8,8'
+    }));
+  }
+  svg.appendChild(el('line',{
+    x1:NODES[NODES.length-1].x, y1:NODES[NODES.length-1].y, x2:TRSR.x, y2:TRSR.y,
+    stroke: cur >= NODES.length ? '#f0c060' : '#c9b99a', 'stroke-width':6, 'stroke-dasharray':'8,8'
+  }));
+
+  NODES.forEach((n, i) => {
+    let active = (i === cur);
+    let done = (i < cur);
+    
+    let bgCol = done ? '#a8d8a8' : (active ? '#f0c060' : '#ede0c4');
+    let strCol = done ? '#3a7d44' : (active ? '#c9973a' : '#c9b99a');
+    
+    let circ = el('circle',{cx:n.x, cy:n.y, r:32, fill:bgCol, stroke:strCol, 'stroke-width':4, cursor:'pointer'});
+    circ.onclick = () => { if(i === cur) startQuiz(); };
+    svg.appendChild(circ);
+
+    svg.appendChild(el('text',{x:n.x, y:n.y+8, 'text-anchor':'middle', 'font-size':22, cursor:'pointer'}, ICONS[i]));
+  });
+
+  drawChest(svg, TRSR.x, TRSR.y, 90, 70, (cur >= NODES.length));
+  
+  document.getElementById("stage-pill").textContent = `Stage ${Math.min(cur+1, 10)} / 10`;
+  document.getElementById("xp-pill").textContent = `⭐ ${score * 15} XP`;
+}
+
+function clickStart(){
+  if(cur < QS.length) startQuiz();
+  else showEndScreen();
+}
+
+function startQuiz(){
+  document.getElementById("map-screen").style.display = "none";
+  document.getElementById("q-screen").style.display = "flex";
+  resetQuestionUI();
+  loadQuestion();
+}
+
+function showMap(){
+  document.getElementById("q-screen").style.display = "none";
+  document.getElementById("map-screen").style.display = "flex";
+  renderMap();
+}
+
+function loadQuestion(){
+  const q = QS[cur];
+  document.getElementById("q-case-lbl").textContent = `Case ${cur+1} of 10`;
+  document.getElementById("q-text").textContent = q.q;
+  document.getElementById("q-prog-fill").style.width = `${(cur/QS.length)*100}%`;
+  
+  let hStr = "";
+  for(let i=0; i<hearts; i++) hStr += "❤️";
+  document.getElementById("q-hearts").textContent = hStr;
+}
+
+function resetQuestionUI(){
+  const fb = document.getElementById("q-feedback");
+  fb.className = "";
+  fb.style.display = "none";
+  document.getElementById("btn-yes").className = "cbtn yes";
+  document.getElementById("btn-no").className = "cbtn no";
+  document.getElementById("btn-yes").disabled = false;
+  document.getElementById("btn-no").disabled = false;
+  document.getElementById("q-next-btn").style.display = "none";
+}
+
+function answer(userAns){
+  const q = QS[cur];
+  document.getElementById("btn-yes").disabled = true;
+  document.getElementById("btn-no").disabled = true;
+
+  const fb = document.getElementById("q-feedback");
+  const head = document.getElementById("fb-head");
+  const body = document.getElementById("fb-body");
+
+  if(userAns === q.ans){
+    score++;
+    fb.className = "ok";
+    head.textContent = "Correct ✅";
+    if(userAns) document.getElementById("btn-yes").classList.add("correct");
+    else document.getElementById("btn-no").classList.add("correct");
+  } else {
+    hearts--;
+    fb.className = "fail";
+    head.textContent = "Incorrect ❌";
+    if(userAns) document.getElementById("btn-yes").classList.add("wrong");
+    else document.getElementById("btn-no").classList.add("wrong");
+  }
+
+  body.textContent = q.ex;
+  fb.style.display = "block";
+  document.getElementById("q-next-btn").style.display = "block";
+}
+
+function nextQ(){
+  cur++;
+  if(cur >= QS.length || hearts <= 0){
+    showEndScreen();
+  } else {
+    resetQuestionUI();
+    loadQuestion();
+  }
+}
+
+function showEndScreen(){
+  document.getElementById("q-screen").style.display = "none";
+  document.getElementById("map-screen").style.display = "none";
+  document.getElementById("end-screen").style.display = "flex";
+
+  const endSvg = document.getElementById("end-svg");
+  endSvg.innerHTML = "";
+  drawChest(endSvg, 120, 100, 140, 100, (score >= 5));
+
+  const nextBtn = document.getElementById("end-next-lesson");
+
+  if(score >= 5){
+    document.getElementById("end-title").textContent = "🏆 Investigation Complete!";
+    document.getElementById("end-msg").textContent = "Excellent work, Detective! You discovered the Sunnah acts and cracked the case file successfully!";
+    document.getElementById("es1").classList.add("lit");
+    document.getElementById("es2").classList.add("lit");
+    if(score >= 8) document.getElementById("es3").classList.add("lit");
+
+    // 1. الطريقة الأولى: حفظ النجاح محلياً
+    localStorage.setItem("game1_passed", "true");
+    
+    // 2. الطريقة الثانية: التنبيه البرمجي المباشر للأب في حال المنبثقات (Modal / iframe)
+    if(window.parent) {
+        if(typeof window.parent.unlockLessonButton === "function") window.parent.unlockLessonButton(); 
+        if(typeof window.parent.unlockLesson === "function") window.parent.unlockLesson(); 
+    }
+
+    nextBtn.disabled = false;
+    nextBtn.textContent = "↩ Return to Lesson";
+    nextBtn.style.background = "linear-gradient(135deg, var(--gold), var(--gold2))";
+    nextBtn.style.color = "#1a2a1a";
+    nextBtn.style.boxShadow = "0 6px 0 #9a6e1a, 0 0 15px rgba(240,192,96,0.5)";
+    
+    launchConfetti();
+  } else {
+    document.getElementById("end-title").textContent = "🔍 Mystery Unsolved";
+    document.getElementById("end-msg").textContent = "You didn't collect enough valid clues. You need at least 5 correct answers to unlock the secret chest.";
+    
+    nextBtn.disabled = true;
+    nextBtn.textContent = "🔒 Lesson Locked";
+    nextBtn.style.background = "linear-gradient(135deg, #8a7560, #c9b99a)";
+    nextBtn.style.color = "#fff";
+    nextBtn.style.boxShadow = "0 6px 0 #5a4a3a";
+  }
+
+  document.getElementById("end-score-num").textContent = `${score} / 10`;
+  document.getElementById("end-score-sub").textContent = "CORRECT CLUES FOUND";
+}
+
+// العودة الذكية والمحسّنة لفتح الزر فوراً
+function returnToLesson(){
+   if (window.parent && typeof window.parent.closeGameModal === "function") {
+       window.parent.closeGameModal();
+   } else {
+       // 3. الطريقة الثالثة (الأقوى): إذا عاد المتصفح للخلف، يتم تمرير إشارة بالرابط لإجبار صفحة الدرس على فتح الزر
+       const referrer = document.referrer;
+       if(referrer) {
+           // إذا كانت الصفحة معروفة، نرسل الطالب إليها مع رمز النجاح مدمج بالرابط
+           const separator = referrer.includes('?') ? '&' : '?';
+           window.location.href = referrer + separator + "status=passed&game=1";
+       } else {
+           // كخيار احتياطي أخير
+           window.history.back();
+       }
+   }
+}
+
+function restart(){
+  cur = 0; score = 0; hearts = 3;
+  document.getElementById("end-screen").style.display = "none";
+  document.getElementById("map-screen").style.display = "flex";
+  document.getElementById("es1").classList.remove("lit");
+  document.getElementById("es2").classList.remove("lit");
+  document.getElementById("es3").classList.remove("lit");
+  renderMap();
+}
+
+function launchConfetti(){
+  const scr = document.getElementById("end-screen");
+  for(let i=0; i<60; i++){
+    const c = document.createElement('div');
+    c.className = 'cfp';
+    c.style.left = Math.random()*100 + '%';
+    c.style.top = Math.random()*40 + '%';
+    c.style.width = (Math.random()*8 + 6) + 'px';
+    c.style.height = (Math.random()*8 + 6) + 'px';
+    c.style.background = CFCOLS[Math.floor(Math.random()*CFCOLS.length)];
+    c.style.setProperty('--d', (Math.random()*1.5 + 1) + 's');
+    c.style.setProperty('--dl', (Math.random()*0.4) + 's');
+    scr.appendChild(c);
+  }
+}
+
+window.onload = function(){
+  renderMap();
+};
+</script>
+</body>
+</html>
