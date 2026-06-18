@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Achievements</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/achievement.css">
+</head>
+<body>
+ <header class="navbar">
+    <div class="logo">
+        <img src="image/logo.svg" alt="">
+    </div>
+    <nav>
+        <a href="askquastion.html">Ask Question</a>
+        <a href="javascript:void(0)" onclick="openFeedback()">Send Feedback</a>
+        <a href="MyNote.html">My Notes</a>
+        <a href="AboutMuslim.html">About Muslim</a>
+        <a href="achievement.html">Achievements</a>
+    </nav>
+    <div class="nav-buttons">
+        <a  class="btn-secondary" href="login.html">Login</a>
+        <a class="btn-primary" href="index.html"> Start Learning </a>
+        <div class="notification-wrapper">
+            <img src="image/bell.svg"
+            class="notification-icon">
+            <span class="notification-badge">
+                3
+            </span>
+        </div>
+
+        <a href="Edit Profile.html"
+        class="nav-avatar">
+            <img src="image/زينة.jpeg">
+        </a>
+    </div>
+</header>>
+  <main class="achievements-container">
+    <h1 class="page-title">Achievements</h1>
+
+    <div class="top-dashboard-grid">
+        
+        <section class="dashboard-card dashed-border adhkar-section">
+            <div class="card-header">
+                <div class="header-icon"><img src="image/Daily Adhkar.svg" alt="image of Daily Adhkar"></div>
+                <div>
+                    <h2>Daily Adhkar</h2>
+                    <p class="subtitle">Remembrance of Allah is the heart's peace.</p>
+                </div>
+            </div>
+            
+            <div class="adhkar-list">
+                <div class="adhkar-item">
+                    <div class="item-info">
+                        <img src="image/MorningAdhkar.svg" alt="" class="item-icon">
+                        <div>
+                            <span class="item-title">Morning Adhkar</span>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="adhkar-toggle" data-weight="1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="adhkar-item">
+                    <div class="item-info">
+                        <img src="image/EveningAdhkar.svg" alt="" class="item-icon">
+                        <div>
+                            <span class="item-title">Evening Adhkar</span>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="adhkar-toggle" data-weight="1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="adhkar-item">
+                    <div class="item-info">
+                        <img src="image/AfterPrayer.svg" alt="" class="item-icon">
+                        <div>
+                            <span class="item-title">After Prayer</span>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="adhkar-toggle" data-weight="1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="adhkar-item">
+                    <div class="item-info">
+                        <img src="image/BeforeSleep.svg" alt="" class="item-icon">
+                        <div>
+                            <span class="item-title">Before Sleep</span>
+                        </div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" class="adhkar-toggle" data-weight="1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="completion-box">
+                <div class="completion-ratio" id="adhkarRatio">0/4</div>
+                <div class="completion-label">Daily Completion</div>
+                <p class="completion-desc">Don't forget your evening dhikr to close your day with peace.</p>
+            </div>
+        </section>
+
+        <section class="dashboard-card solid-border prayer-section">
+            <div class="prayer-header">
+                <div>
+                    <h2>Prayer Tracker</h2>
+                    <p class="tracker-date" id="hijriDate">TODAY: MONDAY, 14TH SHAWWAL</p>
+                </div>
+                <div class="prayer-percentage" id="prayerPercent">0%</div>
+            </div>
+
+            <div class="prayer-table">
+                <div class="table-header-row">
+                    <span></span> <span>Fard</span> <span>Sunnah</span>
+                </div>
+                
+                <div class="prayer-row" data-prayer="fajr" data-time="04:32 AM">
+                    <div class="prayer-time-info">
+                        <span class="prayer-name">Fajr</span>
+                        <span class="time-stamp">04:32 AM</span>
+                    </div>
+                    <button class="circle-btn fard-btn" aria-label="Fard completed"></button>
+                    <button class="circle-btn sunnah-btn" aria-label="Sunnah completed"></button>
+                </div>
+
+                <div class="prayer-row" data-prayer="dhuhr" data-time="12:15 PM">
+                    <div class="prayer-time-info">
+                        <span class="prayer-name">Dhuhr</span>
+                        <span class="time-stamp">01:15 PM</span>
+                    </div>
+                    <button class="circle-btn fard-btn"></button>
+                    <button class="circle-btn sunnah-btn"></button>
+                </div>
+
+                <div class="prayer-row" data-prayer="asr" data-time="03:45 PM">
+                    <div class="prayer-time-info">
+                        <span class="prayer-name">Asr</span>
+                        <span class="time-stamp">04:52 PM</span>
+                    </div>
+                    <button class="circle-btn fard-btn"></button>
+                    <button class="circle-btn sunnah-btn"></button>
+                </div>
+
+                <div class="prayer-row" data-prayer="maghrib" data-time="07:05 PM">
+                    <div class="prayer-time-info">
+                        <span class="prayer-name">Maghrib</span>
+                        <span class="time-stamp">07:44 PM</span>
+                    </div>
+                    <button class="circle-btn fard-btn"></button>
+                    <button class="circle-btn sunnah-btn"></button>
+                </div>
+
+                <div class="prayer-row" data-prayer="isha" data-time="08:35 PM">
+                    <div class="prayer-time-info">
+                        <span class="prayer-name">Isha</span>
+                        <span class="time-stamp">09:12 PM</span>
+                    </div>
+                    <button class="circle-btn fard-btn"></button>
+                    <button class="circle-btn sunnah-btn"></button>
+                </div>
+            </div>
+
+            <div class="prayer-footer">
+                <p class="quran-quote">"Verily, the prayer is enjoined on the believers at fixed hours."</p>
+                <button class="btn-adjust-times">Adjust Times</button>
+            </div>
+        </section>
+
+        <section class="dashboard-card dashed-border tasks-section">
+            <div class="tasks-header">
+                <h2>Personal Tasks</h2>
+                <button class="btn-add-task" id="openTaskModal">+ Add Task</button>
+            </div>
+
+            <div class="tasks-container" id="tasksContainer">
+                </div>
+        </section>
+
+    </div>
+
+    <div class="sacred-studies-section">
+        <h2 class="section-subtitle">Sacred Studies</h2>
+        <div class="studies-grid">
+            <div class="study-progress-card">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                        <circle class="ring-fill" cx="40" cy="40" r="34" data-progress="75"/>
+                    </svg>
+                    <div class="ring-icon"><img src="image/Quran2.svg" alt=""></div>
+                </div>
+                <div class="study-percentage">75%</div>
+                <h3>Quran</h3>
+                <span class="study-badge">KEEP IT UP!</span>
+            </div>
+
+            <div class="study-progress-card">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                        <circle class="ring-fill" cx="40" cy="40" r="34" data-progress="30"/>
+                    </svg>
+                    <div class="ring-icon"><img src="image/Aqeedah2.svg" alt=""></div>
+                </div>
+                <div class="study-percentage">30%</div>
+                <h3>Aqeedah</h3>
+                <span class="study-badge text-muted">FOUNDATION BUILDING</span>
+            </div>
+
+            <div class="study-progress-card">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                        <circle class="ring-fill" cx="40" cy="40" r="34" data-progress="50"/>
+                    </svg>
+                    <div class="ring-icon"><img src="image/Ethics2.svg" alt=""></div>
+                </div>
+                <div class="study-percentage">50%</div>
+                <h3>Ethics</h3>
+                <span class="study-badge">HALFWAY THERE</span>
+            </div>
+
+            <div class="study-progress-card">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                        <circle class="ring-fill" cx="40" cy="40" r="34" data-progress="92"/>
+                    </svg>
+                    <div class="ring-icon"><img src="image/Seerah2.svg" alt=""></div>
+                </div>
+                <div class="study-percentage">92%</div>
+                <h3>Seerah</h3>
+                <span class="study-badge">ALMOST EXPERT</span>
+            </div>
+
+            <div class="study-progress-card">
+                <div class="progress-ring-wrapper">
+                    <svg class="progress-ring" width="80" height="80">
+                        <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                        <circle class="ring-fill" cx="40" cy="40" r="34" data-progress="15"/>
+                    </svg>
+                    <div class="ring-icon"><img src="image/Fiqh2.svg" alt=""></div>
+                </div>
+                <div class="study-percentage">15%</div>
+                <h3>Fiqh</h3>
+                <span class="study-badge text-muted">STARTING OUT</span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="task-modal-overlay" id="taskModal">
+    <div class="task-modal-card">
+        <h2>Add New Task</h2>
+        
+        <div class="input-group">
+            <label for="taskNameInput">Task Name</label>
+            <input type="text" id="taskNameInput" placeholder="Read Surah Al-Kahf">
+        </div>
+
+        <div class="input-group">
+            <label for="taskCategoryInput">Category</label>
+            <select id="taskCategoryInput">
+                <option value="Learning">Learning</option>
+                <option value="Spirituality">Spirituality</option>
+                <option value="Community">Community</option>
+            </select>
+        </div>
+
+        <button class="btn-submit-task" id="submitTaskBtn">Add Task</button>
+        <button class="btn-cancel-task" id="closeTaskModal">Cancel</button>
+    </div>
+</div>
+  <script src="js/achievement.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
