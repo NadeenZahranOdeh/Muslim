@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Islamic Prayer Quiz - Build the Mosque</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+      background: linear-gradient(135deg, #2ab269 0%, #ffeacf 25%, #149333 50%, #cdad7c 75%, #d2ffc8 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 10;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .mosque-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      padding: 15px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .mosque-block {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #acbbff 0%, #764ba2 100%);
+      border: 3px solid #764ba2;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .mosque-block.built {
+      animation: buildAnimation 0.6s ease-out;
+      background: linear-gradient(135deg, #bde0f5 0%, #c7def8 100%);
+      box-shadow: 0 8px 12px rgba(228, 236, 255, 0.8);
+    }
+
+    .mosque-block.empty {
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px dashed rgba(255, 255, 255, 0.5);
+    }
+
+    @keyframes buildAnimation {
+      0% {
+        transform: scale(0.5) rotateY(90deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotateY(0deg);
+      }
+      100% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .success-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      z-index: 1000;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: popupAppear 0.4s ease-out;
+    }
+
+    @keyframes popupAppear {
+      0% {
+        transform: translate(-50%, -50%) scale(0.3);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .question-card {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 4px solid #17972a;
+    }
+
+    .answer-btn {
+      background: linear-gradient(135deg, #24ba2e 0%, #f1debe 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      margin: 8px;
+      font-family: 'Comic Sans MS', cursive;
+    }
+
+    .answer-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .answer-btn.correct {
+      background: #4CAF50;
+      animation: correctPulse 0.6s ease;
+    }
+
+    .answer-btn.wrong {
+      background: #FF6B6B;
+      animation: wrongShake 0.6s ease;
+    }
+
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    .completion-screen {
+      text-align: center;
+      color: white;
+    }
+
+    .completion-screen h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 15px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4CAF50, #8BC34A);
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body>
+  <div class="stars" id="starsContainer"></div>
+  <div class="main-wrapper">
+   <!-- Header -->
+   <div class="text-center py-4 relative z-20">
+    <h1 class="text-4xl font-bold text-white mb-2" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.3);">⭐ Collect the Stars ⭐</h1>
+    <p class="text-xl text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">Disliked acts of prayer</p>
+   </div><!-- Mosque Building Display -->
+   <div class="flex justify-center py-4">
+    <div class="mosque-container" id="mosqueBuildingContainer"></div>
+   </div><!-- Progress Bar -->
+   <div class="px-6 mb-4">
+    <div class="progress-bar">
+     <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <p class="text-white text-center font-bold">Question <span id="currentQuestion">1</span> of 10</p>
+   </div><!-- Quiz Container -->
+   <div class="flex-1 flex items-center justify-center px-4 pb-8">
+    <div id="quizContainer" class="w-full max-w-2xl">
+     <div class="question-card">
+      <h2 class="text-2xl font-bold text-center mb-6" id="questionText"></h2>
+      <div id="answersContainer" class="flex flex-col gap-3"></div>
+     </div>
+    </div><!-- Completion Screen (hidden initially) -->
+    <div id="completionScreen" class="completion-screen hidden text-center px-4">
+     <h1>🎉 Well done! 🎉</h1>
+     <p class="text-3xl mb-8">Keep learning and improving your prayer journey ⭐</p><button class="answer-btn mt-8 px-8 py-4 text-xl" onclick="resetGame()">Play Again!</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Create stars background
+    const starsContainer = document.getElementById('starsContainer');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    const questions = [
+      {
+        question: "What should you remove before entering the prayer (Salah)?",
+        answers: ["Shoes and dirt", "Your watch", "Your hat"],
+        correct: 0
+      },
+      {
+        question: "Which of these is NOT disliked during prayer?",
+        answers: ["Looking to the sides", "Standing with crossed arms", "Wearing clean clothes"],
+        correct: 2
+      },
+      {
+        question: "Is it disliked to pray while feeling sleepy?",
+        answers: ["Yes, it's disliked", "No, it's allowed", "Only on Fridays"],
+        correct: 0
+      },
+      {
+        question: "What should you avoid doing during prayer?",
+        answers: ["Playing with your clothes", "Holding your breath", "Closing your eyes slightly"],
+        correct: 0
+      },
+      {
+        question: "Is it disliked to pray near pictures or statues?",
+        answers: ["Yes, very much", "No, it doesn't matter", "Only if they move"],
+        correct: 0
+      },
+      {
+        question: "Which posture is disliked in prayer?",
+        answers: ["Straight and upright", "Hunched over", "Calm and peaceful"],
+        correct: 1
+      },
+      {
+        question: "Should you pray while facing distractions?",
+        answers: ["Yes, always", "No, avoid distractions", "Only at home"],
+        correct: 1
+      },
+      {
+        question: "Is it disliked to yawn during prayer?",
+        answers: ["Yes, cover your mouth", "No, it's natural", "Only in the mosque"],
+        correct: 0
+      },
+      {
+        question: "What should you avoid wearing during prayer?",
+        answers: ["Beautiful clean clothes", "Distracting jewelry", "Regular comfortable clothes"],
+        correct: 1
+      },
+      {
+        question: "Is it disliked to pray with an empty stomach?",
+        answers: ["Yes, always eat first", "No, but better to be healthy", "Only on Mondays"],
+        correct: 1
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;
+    let answeredQuestions = new Set();
+
+    // Initialize mosque blocks
+    function initMosque() {
+      const container = document.getElementById('mosqueBuildingContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < 10; i++) {
+        const block = document.createElement('div');
+        block.className = 'mosque-block empty';
+        block.textContent = i + 1;
+        container.appendChild(block);
+      }
+    }
+
+    // Display question
+    function showQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        showCompletion();
+        return;
+      }
+
+      const question = questions[currentQuestionIndex];
+      document.getElementById('questionText').textContent = question.question;
+      document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+
+      const answersContainer = document.getElementById('answersContainer');
+      answersContainer.innerHTML = '';
+
+      question.answers.forEach((answer, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'answer-btn';
+        btn.textContent = answer;
+        btn.onclick = () => checkAnswer(index);
+        answersContainer.appendChild(btn);
+      });
+
+      updateProgressBar();
+    }
+
+    // Check answer
+    function checkAnswer(selectedIndex) {
+      const question = questions[currentQuestionIndex];
+      const buttons = document.querySelectorAll('.answer-btn');
+      const isCorrect = selectedIndex === question.correct;
+
+      buttons.forEach((btn, index) => {
+        btn.disabled = true;
+        if (index === question.correct) {
+          btn.classList.add('correct');
+        } else if (index === selectedIndex && !isCorrect) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      if (isCorrect) {
+        correctAnswers++;
+        buildMosqueBlock();
+        createConfetti();
+        showSuccessPopup();
+      }
+
+      setTimeout(() => {
+        currentQuestionIndex++;
+        showQuestion();
+      }, 1500);
+    }
+
+    // Build mosque block
+    function buildMosqueBlock() {
+      const blocks = document.querySelectorAll('.mosque-block');
+      if (correctAnswers <= blocks.length) {
+        const index = correctAnswers - 1;
+        blocks[index].classList.remove('empty');
+        blocks[index].classList.add('built');
+        const emojis = ['⭐', '✨', '🌟', '💫', '⭐', '✨', '🌟', '💫', '⭐', '✨'];
+        blocks[index].innerHTML = emojis[index];
+      }
+    }
+
+    // Create confetti
+    function createConfetti() {
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = '-10px';
+        confetti.style.background = ['#FFD700', '#FFA500', '#FF69B4', '#00CED1', '#32CD32'][Math.floor(Math.random() * 5)];
+        confetti.style.animation = `fall ${2 + Math.random()}s linear forwards`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2500);
+      }
+    }
+
+    // Show success popup
+    function showSuccessPopup() {
+      const popup = document.createElement('div');
+      popup.className = 'success-popup';
+      popup.innerHTML = '✅ Correct! +1 Block';
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 1500);
+    }
+
+    // Update progress bar
+    function updateProgressBar() {
+      const progress = (currentQuestionIndex / questions.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+    }
+
+    // Show completion screen
+   // Show completion screen
+    function showCompletion() {
+      document.getElementById('quizContainer').classList.add('hidden');
+      document.getElementById('completionScreen').classList.remove('hidden');
+      createMassConfetti();
+
+      // 🌟 تفعيل الربط البرمجي هنا للمستوى الرابع 🌟
+      const maxScore = questions.length; // عدد الأسئلة الكلي وهو 10
+      const percentage = (correctAnswers / maxScore) * 100; // حساب النسبة المئوية للنجاح
+
+      // تخزين حالة النجاح إذا كانت الإجابات الصحيحة 5 فما فوق (أكبر من أو يساوي 50%)
+      if (percentage >= 50) {
+        localStorage.setItem("level4Passed", "true");
+      } else {
+        localStorage.setItem("level4Passed", "false");
+      }
+
+      // حفظ السكور الفعلي للرجوع إليه في لوحة الإنجازات (Achievements) لاحقاً
+      localStorage.setItem("level4Score", correctAnswers * 10); 
+      
+      // طباعة تأكيدية في المتصفح للتأكد من الحفظ المباشر
+      console.log(`Game Completed! Progress saved: ${percentage}%`);
+    }
+
+    // Create massive confetti for completion
+    function createMassConfetti() {
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.top = '-10px';
+          confetti.style.background = ['#FFD700', '#FFA500', '#FF69B4', '#00CED1', '#32CD32'][Math.floor(Math.random() * 5)];
+          confetti.style.animation = `fall ${3 + Math.random() * 2}s linear forwards`;
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 5000);
+        }, i * 30);
+      }
+    }
+
+    // Initialize game
+    initMosque();
+    showQuestion();
+
+    // Reset game function
+  // Reset game function
+    function resetGame() {
+      currentQuestionIndex = 0;
+      correctAnswers = 0;
+      answeredQuestions.clear();
+
+      // 🌟 تصفير مؤقت للمفتاح لحين إنهاء المحاولة الجديدة 🌟
+      localStorage.setItem("level4Passed", "false");
+
+      document.getElementById('quizContainer').classList.remove('hidden');
+      document.getElementById('completionScreen').classList.add('hidden');
+
+      document.getElementById('progressFill').style.width = "0%";
+      document.getElementById('currentQuestion').textContent = "1";
+
+      document.querySelectorAll('.confetti').forEach(e => e.remove());
+      document.querySelectorAll('.success-popup').forEach(e => e.remove());
+
+      const container = document.getElementById('mosqueBuildingContainer');
+      container.innerHTML = '';
+
+      for (let i = 0; i < 10; i++) {
+        const block = document.createElement('div');
+        block.className = 'mosque-block empty';
+        block.textContent = i + 1;
+        container.appendChild(block);
+      }
+
+      showQuestion();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0582f1caf9f5175',t:'MTc4MDQyMTQwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
