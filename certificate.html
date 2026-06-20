@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Certificate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Lato', 'Amiri', sans-serif;
+      background-color: #f4f6f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #3f5d2a;
+      margin-bottom: 10px;
+    }
+
+    /* حاوية الشهادة لتكون متجاوبة على الهواتف */
+    .certificate-wrapper {
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-download {
+      background-color: #4D6530;
+      color: white;
+    }
+
+    .btn-download:hover {
+      background-color: #3f5d2a;
+    }
+
+    .btn-back {
+      background-color: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn-back:hover {
+      background-color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Congratulations!</h1>
+  <p>Here is your well-deserved certificate</p>
+  <div class="certificate-wrapper">
+    <canvas id="certificateCanvas"></canvas>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-download" id="downloadBtn">Download Certificate 📥</button>
+    <a href="prayerjourney.html" class="btn btn-back">Back to Journey</a>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("certificateCanvas");
+      const ctx = canvas.getContext("2d");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      // 1. جلب اسم المستخدم من الـ localStorage (ووضع اسم افتراضي إذا لم يسجل دخوله بعد للتجربة)
+      const fullName = localStorage.getItem("username") || "Guest User";
+
+      // 2. تحميل صورة الشهادة الفارغة
+      const image = new Image();
+      image.src = "image/muslim web managment.jpeg"; // ضع هنا مسار صورة الشهادة الخاص بك (مثلاً image/certificate_blank.png)
+
+      image.onload = function () {
+        // ضبط أبعاد الـ Canvas لتطابق أبعاد الصورة الأصلية بدقة عالية
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+
+        // رسم صورة الشهادة كخلفية
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        // 3. إعدادات الخط والنص الخاص باسم المستخدم
+        // يمكنك تغيير حجم الخط (مثلاً 60px) ونوعه ليتناسب مع تصميمك (استخدمت Amiri لأنه يدعم العربي واللاتيني بشكل جميل)
+        ctx.font = "bold 60px 'Amiri', 'Lato', sans-serif";
+        ctx.fillStyle = "#3f5d2a"; // لون الخط (يتماشى مع ثيم موقعك الأخضر)
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        // 4. تحديد مكان الاسم (الإحداثيات)
+        // X = المنتصف تماماً أفقياً
+        const xPosition = canvas.width / 2;
+        
+        // Y = العمودي. (قم بتغيير الرقم 0.55 زيادة أو نقصاناً ليرتفع الاسم أو ينخفض ليجلس تماماً على السطر المخصص له في صورتك)
+        const yPosition = canvas.height * 0.55; 
+
+        // رسم اسم المستخدم فوق الصورة
+        ctx.fillText(fullName, xPosition, yPosition);
+      };
+
+      // 5. تفعيل زر تحميل الشهادة كصورة
+      downloadBtn.addEventListener("click", () => {
+        // تحويل الـ Canvas إلى رابط تحميل صورة
+        const imageURI = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.download = `${fullName}-Certificate.png`;
+        link.href = imageURI;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    });
+  </script>
+</body>
+</html>
