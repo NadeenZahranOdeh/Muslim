@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Admin - Feedback Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/feedback.css">
+</head>
+<body>
+
+    <div class="dashboard-wrapper">
+        
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <img src="../image/logo.svg" alt="Muslim Logo">
+                <h2>Muslim Admin</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="users.html" class="menu-item"><i class="fa-solid fa-users"></i> Manage Users</a>
+                <a href="questions.html" class="menu-item"><i class="fa-solid fa-circle-question"></i> Manage Questions</a>
+                <a href="feedback.html" class="menu-item active"><i class="fa-solid fa-star-half-stroke"></i> Reviews & Feedback</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" onclick="sessionStorage.clear()" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="content-header">
+                <div class="header-title">
+                    <h1>Reviews & Feedback</h1>
+                    <p>Monitor platform ratings and student satisfaction reviews here.</p>
+                </div>
+                <div class="admin-profile-badge">
+                    <img src="../image/زينة.jpeg" alt="Admin Avatar">
+                    <span>Admin Nadeen</span>
+                </div>
+            </header>
+
+            <section class="table-controls-bar">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="feedbackSearchInput" oninput="filterFeedbackTable()" placeholder="Search by username, review text, or rating...">
+                </div>
+            </section>
+
+            <section class="feedback-list-card">
+                <div class="card-title-header">
+                    <h3>Student Reviews</h3>
+                </div>
+                <div class="table-responsive">
+                    <table id="feedbackTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 150px;">Student Name</th>
+                                <th style="width: 150px;">Rating</th>
+                                <th>Review Message</th>
+                                <th style="width: 150px;">Submitted Date</th>
+                                <th style="width: 120px; text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="feedbackTableBody">
+                            
+                            <tr>
+                                <td class="user-td">JohnM</td>
+                                <td>
+                                    <div class="stars-container">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                    </div>
+                                </td>
+                                <td class="feedback-text-td">The new interface is a massive improvement! It helps me stay organized with my lessons.</td>
+                                <td class="date-td">2026-06-19</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="delete-feedback-btn" onclick="deleteFeedbackRow(this, 'JohnM')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="user-td">SarahK</td>
+                                <td>
+                                    <div class="stars-container">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                                    </div>
+                                </td>
+                                <td class="feedback-text-td">Login is sometimes slow on mobile data, but the overall content is spiritually beautiful.</td>
+                                <td class="date-td">2026-06-18</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="delete-feedback-btn" onclick="deleteFeedbackRow(this, 'SarahK')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="user-td">DavidC</td>
+                                <td>
+                                    <div class="stars-container">
+                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                    </div>
+                                </td>
+                                <td class="feedback-text-td">Absolutely loving the interactive quizzes! They make memorization and tracking much easier.</td>
+                                <td class="date-td">2026-06-15</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="delete-feedback-btn" onclick="deleteFeedbackRow(this, 'DavidC')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="js/feedback.js"></script>
+</body>
+</html>

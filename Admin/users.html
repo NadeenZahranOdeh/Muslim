@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Admin-User Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/users.css">
+</head>
+<body>
+
+    <div class="dashboard-wrapper">
+        
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <img src="../image/logo.svg" alt="Muslim Logo">
+                <h2>Muslim Admin</h2>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+                <a href="users.html" class="menu-item active"><i class="fa-solid fa-users"></i> Manage Users</a>
+                <a href="questions.html" class="menu-item"><i class="fa-solid fa-circle-question"></i> Manage Questions</a>
+                <a href="feedback.html" class="menu-item"><i class="fa-solid fa-star-half-stroke"></i> Reviews & Feedback</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="login.html" onclick="sessionStorage.clear()" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="content-header">
+                <div class="header-title">
+                    <h1>User Management</h1>
+                    <p>Overview and manage all registered foreign and local student profiles.</p>
+                </div>
+                <div class="admin-profile-badge">
+                    <img src="../image/زينة.jpeg" alt="Admin Avatar">
+                    <span>Admin Nadeen</span>
+                </div>
+            </header>
+
+            <section class="table-controls-bar">
+                <div class="search-box-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="userSearchInput" onkeyup="filterUsersTable()" placeholder="Search by username, email, or country...">
+                </div>
+                <button class="add-user-btn" onclick="openAddUserModal()"><i class="fa-solid fa-user-plus"></i> Add New User</button>
+            </section>
+
+            <section class="users-list-card">
+                <div class="card-title-header">
+                    <h3>Users List</h3>
+                </div>
+                <div class="table-responsive">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td>001</td>
+                                <td class="username-td">JohnM</td>
+                                <td>john.m@example.com</td>
+                                <td>United Kingdom</td>
+                                <td>London</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '001')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td class="username-td">SarahK</td>
+                                <td>sarahk@corp.net</td>
+                                <td>Palestine</td>
+                                <td>Ramallah</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '002')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td class="username-td">DavidC</td>
+                                <td>d.cohen@gmail.com</td>
+                                <td>United States</td>
+                                <td>New York</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '003')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>004</td>
+                                <td class="username-td">NourA</td>
+                                <td>nour.a@mail.ps</td>
+                                <td>Palestine</td>
+                                <td>Gaza City</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '004')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>005</td>
+                                <td class="username-td">JacobB</td>
+                                <td>jacob@studio.co.uk</td>
+                                <td>Canada</td>
+                                <td>Toronto</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '005')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>006</td>
+                                <td class="username-td">FatimaS</td>
+                                <td>f.saeed@web.ps</td>
+                                <td>Palestine</td>
+                                <td>Hebron</td>
+                                <td style="text-align: center;">
+                                    <button class="delete-user-btn" onclick="deleteUserRow(this, '006')">Delete <i class="fa-solid fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="addUserModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Add New Student Profile</h3>
+                <span class="close-modal-btn" onclick="closeAddUserModal()">&times;</span>
+            </div>
+            <form id="addNewUserForm" onsubmit="handleCreateUser(event)">
+                <div class="modal-input-group">
+                    <label for="newUsername">Username</label>
+                    <input type="text" id="newUsername" required placeholder="e.g., EmilyR">
+                </div>
+                <div class="modal-input-group">
+                    <label for="newEmail">Email Address</label>
+                    <input type="email" id="newEmail" required placeholder="e.g., emily@domain.com">
+                </div>
+                <div class="modal-input-grid">
+                    <div class="modal-input-group">
+                        <label for="newCountry">Country</label>
+                        <input type="text" id="newCountry" required placeholder="e.g., Australia">
+                    </div>
+                    <div class="modal-input-group">
+                        <label for="newCity">City</label>
+                        <input type="text" id="newCity" required placeholder="e.g., Sydney">
+                    </div>
+                </div>
+                <button type="submit" class="submit-create-btn">Save & Create User</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/users.js"></script>
+</body>
+</html>
