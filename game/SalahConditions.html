@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Salah Journey</title>
+<link rel="stylesheet" href="../game/SalahConditions.css">
+</head>
+<body>
+<div id="welcome">
+<h1>🕌 Salah Journey</h1>
+<p>Help Omar reach the mosque by answering correctly.</p>
+<button onclick="startGame()">Start Journey</button>
+</div>
+<div id="game">
+<div class="topBar">
+<div id="score">⭐ Score: 0</div>
+<div id="timer">⏱ 40</div>
+</div>
+<div class="progressContainer">
+<div id="progressBar"></div>
+</div>
+<div class="gameArea">
+<img class="bg" src="../game/background.jpg">
+<img id="sheikh" src="../image/shaikh.png">
+<div id="speech">Let's begin!</div>
+</div>
+<div id="questionBox">
+<h2 id="question"></h2>
+<div id="answers"></div>
+</div>
+</div>
+<div id="win">
+<h1>🎉 Great Job!</h1>
+<p>You reached the mosque!</p>
+<button onclick="location.reload()">Play Again</button>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

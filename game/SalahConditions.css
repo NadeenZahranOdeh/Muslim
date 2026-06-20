@@ -1,0 +1,137 @@
+body{
+background-repeat: no-repeat;
+background-size: cover;
+margin:0;
+background-image: url("../game/background.jpg");
+text-align:center;
+overflow: hidden;
+
+}
+
+#welcome{
+margin-top:120px;
+}
+
+button{
+
+background:#3F6B4B;
+color:white;
+border:none;
+padding:15px 25px;
+font-size:18px;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+#game{
+display:none;
+
+}
+
+.topBar{
+display:flex;
+justify-content:space-between;
+padding:20px 40px;
+font-size:20px;
+
+}
+
+.progressContainer{
+width:80%;
+height:14px;
+background:#ddd;
+margin:auto;
+border-radius:20px;
+
+}
+
+#progressBar{
+height:100%;
+width:0%;
+background:#3F6B4B;
+transition:0.5s;
+
+}
+/* game area */
+
+.gameArea{
+position:relative;
+width:700px;
+height:300px;
+margin:30px auto;
+}
+
+.bg{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+#sheikh{
+position:absolute;
+bottom:40px;
+left:40px;
+width:210px;
+transition:1s;
+
+}
+
+/* speech bubble */
+#speech{
+position:absolute;
+bottom:160px;
+left:40px;
+background:white;
+padding:10px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* question */
+#questionBox{
+background:white;
+width:420px;
+margin:20px auto;
+padding:20px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+}
+
+.answer{
+background:#3F6B4B;
+color:white;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+.answer:hover{
+background:#2e5038;
+}
+
+.star{
+position:absolute;
+width:40px;
+animation:fly 1s forwards;
+
+}
+
+@keyframes fly{
+
+0%{transform:translateY(0);opacity:1}
+
+100%{transform:translateY(-120px);opacity:0}
+
+}
+
+#win{
+display:none;
+margin-top:120px;
+
+}
+

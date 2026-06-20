@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sheikh's Journey to Prayer</title>
+    <style>
+        :root {
+            --primary-blue: #29b6f6;
+            --fair-gold: #ffd54f;
+            --grass-green: #66bb6a;
+            --wood-brown: #8d6e63;
+            --page-bg: #fdfbf7;
+            --text-color: #2e1c0c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Fredoka One', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffecb3, #b3e5fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            user-select: none;
+        }
+
+        /* حاوية اللعبة الرئيسية المصممة كطاولة خلف الكتاب */
+        #game-container {
+            width: 100%;
+            max-width: 1020px;
+            height: 620px;
+            background: #a1887f;
+            border: 12px solid #5d4037;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* تصميم الكتاب المفتوح التفاعلي */
+        .storybook {
+            width: 94%;
+            height: 88%;
+            background-color: #d7ccc8;
+            border-radius: 15px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2), 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            position: relative;
+            padding: 10px;
+        }
+
+        /* الفاصل أو الفراغ في منتصف الكتاب */
+        .book-spine {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 100%;
+            background: linear-gradient(to right, #bcaaa4, #8d6e63, #bcaaa4);
+            z-index: 5;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* الصفحات اليسرى واليمنى */
+        .book-page {
+            width: 50%;
+            height: 100%;
+            background-color: var(--page-bg);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-left {
+            border-radius: 10px 0 0 10px;
+            border-right: 1px solid #e0e0e0;
+            background: linear-gradient(to right, #f5f5f5 0%, var(--page-bg) 4%);
+        }
+
+        .page-right {
+            border-radius: 0 10px 10px 0;
+            border-left: 1px solid #e0e0e0;
+            background: linear-gradient(to left, #f5f5f5 0%, var(--page-bg) 4%);
+        }
+
+        /* إعدادات الشاشات والمشاهد */
+        .scene-content {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        .scene-content.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* تنسيق صورة الشيخ المشتقة من image_55d888.png */
+        .sheikh-img {
+            height: 250px;
+            object-fit: contain;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.15));
+        }
+
+        .sheikh-small {
+            height: 180px;
+        }
+
+        /* نصوص العناوين والقصة */
+        .game-title {
+            font-size: 2.2rem;
+            color: #2e7d32;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 5px;
+        }
+
+        .story-text {
+            font-size: 1.35rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            text-align: center;
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px dashed #ffb74d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        /* أزرار التحكم اللطيفة والمبهجة */
+        .btn-action {
+            background-color: #ff9800;
+            color: white;
+            border: 3px solid white;
+            padding: 12px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-action:hover {
+            background-color: #f57c00;
+            transform: scale(1.05);
+        }
+
+        .btn-green { background-color: var(--grass-green); }
+        .btn-green:hover { background-color: #4caf50; }
+
+        .page-number {
+            font-size: 0.9rem;
+            color: #a1887f;
+            font-weight: bold;
+            bottom: 5px;
+            position: absolute;
+        }
+        .page-left .page-number { left: 20px; }
+        .page-right .page-number { right: 20px; }
+
+        /* لوحة التحكم بالأسئلة والنقاط */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #e1f5fe;
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 2px solid #81d4fa;
+            font-size: 1rem;
+            color: #0288d1;
+            font-weight: bold;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            color: #1a237e;
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .option-item {
+            width: 100%;
+            background-color: white;
+            border: 3px solid #e0e0e0;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            color: var(--text-color);
+        }
+
+        .option-item:hover {
+            background-color: #fffde7;
+            border-color: #fff59d;
+        }
+
+        .option-item.correct {
+            background-color: #c8e6c9 !important;
+            border-color: #4caf50 !important;
+            color: #2e7d32;
+        }
+
+        .option-item.wrong {
+            background-color: #ffcdd2 !important;
+            border-color: #f44336 !important;
+            color: #c62828;
+        }
+
+        /* واجهة النتيجة النهائية */
+        .score-board {
+            text-align: center;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            border: 4px solid #ffd54f;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .stars {
+            font-size: 2.5rem;
+            color: #ffd54f;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div class="storybook">
+        <div class="book-spine"></div>
+
+        <!-- الصفحة اليسرى (تتغير محتوياتها ديناميكياً) -->
+        <div class="book-page page-left">
+            
+            <!-- مشهد البداية: العنوان والترحيب -->
+            <div id="left-start" class="scene-content active">
+                <h1 class="game-title">The Sheikh's Journey to Prayer</h1>
+                <img src="image1.png" alt="Sheikh" class="sheikh-img">
+                <div style="height: 40px;"></div>
+                <span class="page-number">Page 1</span>
+            </div>
+
+            <!-- مشهد القصة 1 -->
+            <div id="left-story1" class="scene-content">
+                <img src="image2.png" alt="Sheikh" class="sheikh-img">
+                <p class="story-text">On a beautiful morning, the wise Sheikh woke up early to go to the mosque for his prayer.</p>
+                <span class="page-number">Page 3</span>
+            </div>
+
+            <!-- مشهد القصة 2 -->
+            <div id="left-story2" class="scene-content">
+                <img src="image3.png" alt="Sheikh" class="sheikh-img" style="transform: scaleX(-1);">
+                <p class="story-text">He walked down the peaceful path, enjoying the fresh air and looking forward to the prayer.</p>
+                <span class="page-number">Page 5</span>
+            </div>
+
+            <!-- مشهد القصة 3 -->
+            <div id="left-story3" class="scene-content">
+                <img src="image4.png" alt="Sheikh" class="sheikh-img">
+                <p class="story-text">Before entering the prayer hall, the Sheikh went to the washing area to perform Wudu (Ablution) correctly.</p>
+                <span class="page-number">Page 7</span>
+            </div>
+
+            <!-- مرحلة الأسئلة: الصفحة اليسرى تظل ثابتة لإظهار صورة الشيخ المحفزة -->
+            <div id="left-quiz-panel" class="scene-content">
+                <h2 style="color: #0288d1; font-size: 1.6rem; text-align: center;">Wudu Challenge!</h2>
+                <img src="image5.png" alt="Sheikh" class="sheikh-img sheikh-small">
+                <p style="text-align: center; color: #555; font-style: italic; font-size: 1.1rem;">"Let's help the children learn the correct steps of Wudu together!"</p>
+                <span class="page-number">Quiz Time</span>
+            </div>
+
+            <!-- مشهد النهاية والفوز -->
+            <div id="left-win" class="scene-content">
+                <h1 class="game-title" style="color: var(--grass-green);">Congratulations!</h1>
+                <img src="image6.png" alt="Sheikh" class="sheikh-img">
+                <span class="page-number">The End</span>
+            </div>
+
+        </div>
+
+        <!-- الصفحة اليمنى (تتغير محتوياتها ديناميكياً) -->
+        <div class="book-page page-right">
+            
+            <!-- مشهد البداية: زر الانطلاق -->
+            <div id="right-start" class="scene-content active">
+                <div style="text-align: center; margin-top: 40px;">
+                    <p style="font-size: 1.4rem; color: var(--text-color); margin-bottom: 30px; font-weight: bold;">Welcome to the interactive story book! Learn Wudu with the Sheikh.</p>
+                </div>
+                <button class="btn-action" onclick="flipTo('story1')">Open Book →</button>
+                <span class="page-number">Page 2</span>
+            </div>
+
+            <!-- تابع مشهد 1 -->
+            <div id="right-story1" class="scene-content">
+                <div style="height: 20px;"></div>
+                <p style="font-size: 1.2rem; color: #5d4037; text-align: center; font-weight: bold;">He smiled and thanked Allah for another wonderful day.</p>
+                <button class="btn-action btn-green" onclick="flipTo('story2')">Next Page →</button>
+                <span class="page-number">Page 4</span>
+            </div>
+
+            <!-- تابع مشهد 2 -->
+            <div id="right-story2" class="scene-content">
+                <div style="height: 20px;"></div>
+                <p style="font-size: 1.2rem; color: #5d4037; text-align: center; font-weight: bold;">He remembered that cleanliness is a very important part of faith.</p>
+                <button class="btn-action btn-green" onclick="flipTo('story3')">Next Page →</button>
+                <span class="page-number">Page 6</span>
+            </div>
+
+            <!-- تابع مشهد 3 -->
+            <div id="right-story3" class="scene-content">
+                <div style="height: 20px;"></div>
+                <p style="font-size: 1.2rem; color: #5d4037; text-align: center; font-weight: bold;">Are you ready to answer the questions about Wudu steps?</p>
+                <button class="btn-action" onclick="startQuizMode()">Start Quiz! ➔</button>
+                <span class="page-number">Page 8</span>
+            </div>
+
+            <!-- لوحة الأسئلة التفاعلية الخمسة (اليمنى) -->
+            <div id="right-quiz-panel" class="scene-content">
+                <div class="quiz-header">
+                    <span id="quiz-progress">Question 1/5</span>
+                    <span id="score-live">Score: 0</span>
+                </div>
+                
+                <div id="question-box" class="question-text">Loading question...</div>
+                
+                <div id="options-container" class="options-list">
+                    <!-- خيارات الأجوبة تظهر برمجياً هنا -->
+                </div>
+
+                <button id="btn-next-question" class="btn-action btn-green" style="display: none; width: 100%;" onclick="nextQuestion()">Next Question ➔</button>
+                <span class="page-number">Ablution Quiz</span>
+            </div>
+
+            <!-- شاشة عرض حساب النقاط والنتيجة النهائية -->
+            <div id="right-win" class="scene-content">
+                <div class="score-board">
+                    <div id="final-stars" class="stars">⭐⭐⭐</div>
+                    <h2 style="color: #388e3c; margin-bottom: 10px;">Well Done!</h2>
+                    <p id="final-score-text" style="font-size: 1.3rem; font-weight: bold; color: var(--text-color);">You scored 0 out of 5</p>
+                </div>
+                <button class="btn-action" onclick="restartGame()" style="background-color: #ff9800;">Read Again ↺</button>
+                <span class="page-number">Results</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // قاعدة بيانات الأسئلة الخمسة باللغة الإنجليزية للوضوء
+    const quizDatabase = [
+        {
+            question: "1. What do we say mentally or quietly before starting Wudu?",
+            options: ["Alhamdulillah", "Bismillah", "Allahu Akbar"],
+            correct: 1
+        },
+        {
+            question: "2. How many times is it sunnah to wash our hands up to the wrists at the beginning?",
+            options: ["1 Time", "2 Times", "3 Times"],
+            correct: 2
+        },
+        {
+            question: "3. What step comes immediately after washing the hands?",
+            options: ["Washing the face", "Rinsing the mouth and nose", "Washing the feet"],
+            correct: 1
+        },
+        {
+            question: "4. When washing the arms, we must include the arms up to the...",
+            options: ["Elbows", "Shoulders", "Wrists only"],
+            correct: 0
+        },
+        {
+            question: "5. What is the very last step when finishing Wudu?",
+            options: ["Washing the ears", "Washing the feet up to ankles", "Wiping the head"],
+            correct: 1
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // دالة تقليب الصفحات والتحكم بالمشاهد المفتوحة
+    function flipTo(pageKey) {
+        // إخفاء جميع المحتويات أولاً
+        const allContents = document.querySelectorAll('.scene-content');
+        allContents.forEach(el => el.classList.remove('active'));
+
+        if (pageKey === 'start') {
+            document.getElementById('left-start').classList.add('active');
+            document.getElementById('right-start').classList.add('active');
+        } else if (pageKey === 'story1') {
+            document.getElementById('left-story1').classList.add('active');
+            document.getElementById('right-story1').classList.add('active');
+        } else if (pageKey === 'story2') {
+            document.getElementById('left-story2').classList.add('active');
+            document.getElementById('right-story2').classList.add('active');
+        } else if (pageKey === 'story3') {
+            document.getElementById('left-story3').classList.add('active');
+            document.getElementById('right-story3').classList.add('active');
+        } else if (pageKey === 'quiz') {
+            document.getElementById('left-quiz-panel').classList.add('active');
+            document.getElementById('right-quiz-panel').classList.add('active');
+        } else if (pageKey === 'win') {
+            document.getElementById('left-win').classList.add('active');
+            document.getElementById('right-win').classList.add('active');
+        }
+    }
+
+    // الانتقال لوضع الأسئلة
+    function startQuizMode() {
+        currentQuestionIndex = 0;
+        score = 0;
+        document.getElementById('score-live').innerText = "Score: 0";
+        flipTo('quiz');
+        loadQuestion();
+    }
+
+    // بناء وعرض السؤال الحالي داخل صفحة الكتاب اليمنى
+    function loadQuestion() {
+        const nextBtn = document.getElementById('btn-next-question');
+        nextBtn.style.display = 'none';
+
+        const qData = quizDatabase[currentQuestionIndex];
+        document.getElementById('quiz-progress').innerText = `Question ${currentQuestionIndex + 1}/${quizDatabase.length}`;
+        document.getElementById('question-box').innerText = qData.question;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        qData.options.forEach((optionText, index) => {
+            const button = document.createElement('button');
+            button.className = 'option-item';
+            button.innerText = optionText;
+            button.onclick = () => checkAnswer(index, button);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    // فحص الإجابات وحساب النقاط تزامناً مع اللعب
+    function checkAnswer(selectedIndex, clickedButton) {
+        const qData = quizDatabase[currentQuestionIndex];
+        const allButtons = document.querySelectorAll('.option-item');
+
+        // قفل الخيارات لمنع تكرار الضغط
+        allButtons.forEach(btn => btn.disabled = true);
+
+        if (selectedIndex === qData.correct) {
+            clickedButton.classList.add('correct');
+            score++;
+            document.getElementById('score-live').innerText = `Score: ${score}`;
+        } else {
+            clickedButton.classList.add('wrong');
+            // كشف الإجابة الصحيحة للطفل ليتعلمها
+            allButtons[qData.correct].classList.add('correct');
+        }
+
+        // إظهار زر الخطوة التالية وتحديث نصه بالصفحة الأخيرة
+        const nextBtn = document.getElementById('btn-next-question');
+        if (currentQuestionIndex === quizDatabase.length - 1) {
+            nextBtn.innerText = "Finish Book ➔";
+        } else {
+            nextBtn.innerText = "Next Question ➔";
+        }
+        nextBtn.style.display = 'block';
+    }
+
+    // الانتقال للسؤال التالي أو عرض النتيجة الإجمالية والنجوم
+    function nextQuestion() {
+        if (currentQuestionIndex < quizDatabase.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            showFinalResults();
+        }
+    }
+
+    // إظهار النتائج النهائية في الصفحة الأخيرة من الكتاب
+    function showFinalResults() {
+        flipTo('win');
+        document.getElementById('final-score-text').innerText = `You scored ${score} out of ${quizDatabase.length}!`;
+        
+        // توزيع النجوم حسب عدد النقاط المحسوبة
+        const starsEl = document.getElementById('final-stars');
+        if (score === 5) {
+            starsEl.innerText = "⭐⭐⭐⭐⭐";
+        } else if (score >= 3) {
+            starsEl.innerText = "⭐⭐⭐";
+        } else {
+            starsEl.innerText = "⭐";
+        }
+    }
+
+    // إعادة تصفير اللعبة للبداية
+    function restartGame() {
+        flipTo('start');
+    }
+</script>
+
+</body>
+</html>
