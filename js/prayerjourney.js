@@ -117,13 +117,10 @@ const detailTitle = document.getElementById('detailTitle');
 const detailDesc  = document.getElementById('detailDesc');
 const detailBegin = document.getElementById('detailBegin');
 
-// فتح اللافته الـ Overlay عند الضغط على أي مرحلة غير مقفلة
 document.querySelectorAll('.step-card').forEach(card => {
   card.addEventListener('click', e => {
     const step = card.closest('.step');
     const status = step.dataset.status;
-
-    // منع فتح اللافته إذا كانت المرحلة مقفلة
     if (status === 'locked') {
       e.preventDefault();
       return;
