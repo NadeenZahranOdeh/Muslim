@@ -1,0 +1,80 @@
+:root {
+    --primary-green: #2a5a30;
+    --dark-green: #1a2a1a;
+    --amber-gold: #c9973a;
+    --btn-blue: #3b82f6;
+    --btn-blue-hover: #2563eb;
+    --badge-red: #e74c3c;
+    --badge-green: #2ecc71;
+    --border-color: #ede0c4;
+}
+
+.table-controls-bar {
+    display: flex;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+/* هندسة صندوق البحث لضبط الأيقونة بدقة */
+.search-box-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box-wrapper input {
+    width: 100%;
+    padding: 12px 16px 12px 42px; /* مسافة 42px من اليسار لعدم تداخل النص مع الأيقونة */
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.search-box-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 4px rgba(42, 90, 48, 0.05);
+}
+
+/* الأيقونة الآن مثبتة بدقة وتتحرك بمرونة */
+.search-icon {
+    position: absolute;
+    left: 15px;
+    color: #a0aec0;
+    font-size: 1rem;
+    pointer-events: none; /* تمنع التداخل عند الضغط بالفأرة */
+}
+
+.questions-list-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 25px 0 0 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+    overflow: hidden;
+}
+
+.card-title-header { padding: 0 25px 20px 25px; border-bottom: 1px solid #f1f5f9; }
+.card-title-header h3 { font-family: 'Noto Serif', serif; color: var(--primary-green); font-size: 1.25rem; }
+.id-td { font-weight: 600; color: var(--amber-gold); }
+.question-text-td { font-weight: 500; color: var(--dark-green); }
+
+.status-badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-align: center; }
+.status-badge.unanswered { background-color: #fdedec; color: var(--badge-red); }
+.status-badge.answered { background-color: #eafaf1; color: var(--badge-green); }
+
+.response-action-container { display: flex; gap: 10px; width: 100%; }
+.response-input { flex: 1; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; font-family: inherit; }
+.response-input:focus { outline: none; border-color: var(--primary-green); }
+
+.save-answer-btn {
+    padding: 10px 18px; background-color: var(--btn-blue); color: white;
+    border: none; border-radius: 8px; font-weight: 600; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: background 0.2s;
+}
+.save-answer-btn:hover { background-color: var(--btn-blue-hover); }
+.saved-response-text { color: #4a5568; font-size: 0.92rem; line-height: 1.5; }

@@ -1,0 +1,116 @@
+:root {
+    --primary-green: #2a5a30;
+    --dark-green: #1a2a1a;
+    --amber-gold: #c9973a;
+    --spiritual-beige: #fdfbf7;
+    --card-bg: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --border-color: #ede0c4;
+    --delete-red: #d63031;
+    --delete-hover: #b32424;
+}
+
+.table-controls-bar {
+    display: flex;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.search-box-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box-wrapper input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.search-box-wrapper input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 4px rgba(42, 90, 48, 0.05);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    color: #a0aec0;
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.feedback-list-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 25px 0 0 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+    overflow: hidden;
+}
+
+.card-title-header {
+    padding: 0 25px 20px 25px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.card-title-header h3 {
+    font-family: 'Noto Serif', serif;
+    color: var(--primary-green);
+    font-size: 1.25rem;
+}
+
+.stars-container {
+    color: var(--amber-gold);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 2px;
+}
+
+.user-td {
+    font-weight: 600;
+    color: var(--dark-green);
+}
+
+.feedback-text-td {
+    color: #4a5568;
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.date-td {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    white-space: nowrap;
+}
+
+.delete-feedback-btn {
+    background-color: transparent;
+    color: var(--delete-red);
+    border: 1px solid var(--delete-red);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.delete-feedback-btn:hover {
+    background-color: var(--delete-red);
+    color: white;
+    transform: scale(1.02);
+}
