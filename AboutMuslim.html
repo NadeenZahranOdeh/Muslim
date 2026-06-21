@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Muslim</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/AboutMuslim.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+ <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
+    </div>
+  </div>
+</header>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="about-hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1>About Muslim</h1>
+                <p class="tagline">Bridging traditional Islamic knowledge and the digital generation.</p>
+            </div>
+            <div class="hero-sheikh">
+                <img src="image/shaikh.png" alt="Sheikh">
+            </div>
+        </div>
+    </section>
+    <main class="about-container">
+        
+        <!-- SECTION: MISSION -->
+        <section class="info-block mission-block">
+            <div class="block-header">
+                <h2>Our Mission</h2>
+            </div>
+            <p>
+                The mission of Muslim is to bridge the gap between traditional Islamic education and the digital generation. We strive to provide a comprehensive, engaging, and accessible platform that empowers individuals to deepen their understanding of their faith through interactive learning. By integrating technology with authentic religious knowledge, we aim to make the journey of seeking knowledge an inspiring and seamless experience that fits into the modern lifestyle, helping users cultivate a stronger, more consistent connection with their Creator.
+            </p>
+        </section>
+        <section class="goals-section">
+            <div class="section-title">
+                <h2>Our Goals</h2>
+            </div>
+            
+            <div class="goals-grid">
+                <!-- Goal 1 -->
+                <div class="goal-card">
+                    <div class="goal-num">01</div>
+                    <h3>Facilitating Authentic Learning</h3>
+                    <p>To provide structured, accurate, and easy-to-understand religious content that caters to various knowledge levels, ensuring that every user can learn the fundamentals of their religion with confidence.</p>
+                </div>
+                <!-- Goal 2 -->
+                <div class="goal-card">
+                    <div class="goal-num">02</div>
+                    <h3>Encouraging Daily Consistency</h3>
+                    <p>To foster spiritual habits through practical tools, such as our progress tracker for Salah and Adhkar, helping users transform religious obligations into cherished daily routines.</p>
+                </div>
+                <!-- Goal 3 -->
+                <div class="goal-card">
+                    <div class="goal-num">03</div>
+                    <h3>Enhancing Engagement</h3>
+                    <p>To utilize gamification and interactive elements to make the learning process dynamic and enjoyable, ensuring that students remain motivated throughout their educational journey.</p>
+                </div>
+                <!-- Goal 4 -->
+                <div class="goal-card">
+                    <div class="goal-num">04</div>
+                    <h3>Supportive Community</h3>
+                    <p>To provide a reliable space where users can seek guidance by asking questions and sharing feedback, fostering an environment of continuous improvement and mutual support.</p>
+                </div>
+                <!-- Goal 5 -->
+                <div class="goal-card">
+                    <div class="goal-num">05</div>
+                    <h3>Promoting Reflective Practice</h3>
+                    <p>To encourage users not just to memorize information, but to apply what they learn in their daily lives, nurturing a balanced and spiritually grounded lifestyle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: METHODOLOGY -->
+        <section class="info-block methodology-block">
+            <div class="methodology-wrapper">
+                <div class="methodology-text">
+                    <h2>Our Methodology</h2>
+                    <p>
+                        Our approach at Muslim is built on a structured, multi-stage pedagogical framework designed to take the learner from foundational knowledge to a more profound understanding of Islamic practices. We believe that learning is most effective when it is interactive; therefore, each educational stage is paired with carefully crafted games and assessments that test comprehension and reinforce key concepts.
+                    </p>
+                    <p>
+                        Beyond simple information delivery, our curriculum is designed to be deeply practical. We recognize that faith is a lived experience, which is why we emphasize the integration of knowledge with action. By combining academic content with personal progress tracking, we allow users to monitor their own growth in real-time. This feedback loop—between studying a topic, playing educational games to master it, and applying it through our daily trackers—creates a holistic learning ecosystem. We are committed to evolving our content based on user feedback to ensure that our platform remains an effective, evolving, and reliable companion for every student on their path of knowledge.
+                    </p>
+                </div>
+                   <div class="methodology-image">
+                    <img src="image/changepass.png" alt="Methodology Structure">
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+  <div class="overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+  <div class="feedback-dropdown" id="feedbackModal">
+    <div class="feedback-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C12 3 8.5 7.5 8.5 10.5C8.5 12.433 10.067 14 12 14C13.933 14 15.5 12.433 15.5 10.5C15.5 7.5 12 3 12 3Z" fill="#3f5d2a"/>
+        <path d="M12 14C12 14 9 17.5 9 19.5C9 20.8807 10.1193 22 11.5 22C12.8807 22 14 20.8807 14 19.5C14 17.5 12 14 12 14Z" fill="#4D6530"/>
+      </svg>
+    </div>
+    <h2>How are we doing?</h2>
+    <p class="subtitle">Your feedback helps us grow this spiritual sanctuary.</p>
+    <div class="stars" id="starsContainer">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div class="rating-text" id="ratingStatus">Select Rating</div>
+    <textarea id="feedbackText" placeholder="Share your thoughts or suggestions..."></textarea>
+    <button class="send-btn" onclick="submitFeedback()">Send Feedback</button>
+    <button class="cancel-btn" onclick="closeFeedback()">Cancel</button>
+  </div>
+
+  <div class="thankyou-popup" id="thankYouModal">
+    <div class="thank-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4D6530"/>
+      </svg>
+    </div>
+    <h2>Thank you for your feedback</h2>
+    <p>Your contribution is highly appreciated.</p>
+    <button class="home-btn" onclick="resetToHome()">Back to Home</button>
+  </div>
+    <script src="js/AboutMuslim.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
