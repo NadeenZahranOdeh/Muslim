@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Settings</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/editprofile.css">
+</head>
+
+<body>
+ <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="page-container">
+
+  <aside class="sidebar">
+    <div class="profile-info">
+        <div class="avatar-wrapper">
+            <img src="image/زينة.jpeg" class="avatar" id="profileImage" alt="Profile">
+            <button type="button" class="edit-avatar">✎</button>
+            <button type="button" class="remove-avatar">🗑</button>
+            <input type="file" id="imageInput" accept="image/*" hidden>
+        </div>
+        <h3>Raghad Swaileh</h3>
+        <p>Student</p>
+    </div>
+
+    <div class="sidebar-menu">
+        <button class="menu-btn active" id="btn-personal" onclick="showSection('personal')">
+            <img src="image/person.svg" alt="icon"> Personal Info
+        </button>
+        <button class="menu-btn" id="btn-security" onclick="showSection('security')">
+            <img src="image/Security.svg" alt="icon"> Security
+        </button>
+        <button class="menu-btn logout" onclick="logoutUser()">
+            <img src="image/Log out.svg" alt="icon"> Logout
+        </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <section id="personalSection" class="content-section active-section">
+      <h1>Edit Profile</h1>
+      <p class="subtitle">Manage your personal details and how others see you across the platform.</p>
+
+      <div class="form-grid">
+        <div class="input-group">
+          <label>FULL NAME</label>
+          <input type="text" value="Nadeen Odeh">
+        </div>
+
+        <div class="input-group">
+          <label>EMAIL ADDRESS</label>
+          <input type="email" value="nadeenodeh@gmail.com">
+        </div>
+
+        <div class="input-group">
+          <label>COUNTRY</label>
+          <input type="text" value="Jordan">
+        </div>
+
+        <div class="input-group">
+          <label>CITY</label>
+          <input type="text" value="Amman">
+        </div>
+      </div>
+    </section>
+
+<section id="securitySection" class="content-section">
+  <h1>Change Password</h1>
+  <p class="subtitle">Update your credentials to keep your account secure and private.</p>
+
+  <div class="form-grid">
+    <div class="input-group full-width password-wrapper">
+      <label>CURRENT PASSWORD</label>
+      <div class="password-input-container">
+        <input type="password" id="currentPassword" placeholder="Current password">
+        <span class="toggle-password" onclick="togglePasswordVisibility('currentPassword', this)">👁️</span>
+      </div>
+    </div>
+
+    <div class="input-group full-width password-wrapper">
+      <label>NEW PASSWORD</label>
+      <div class="password-input-container">
+        <input type="password" id="newPassword" placeholder="New password">
+        <span class="toggle-password" onclick="togglePasswordVisibility('newPassword', this)">👁️</span>
+      </div>
+      <small class="password-hint">At least 8 characters</small>
+    </div>
+
+    <div class="input-group full-width password-wrapper">
+      <label>CONFIRM PASSWORD</label>
+      <div class="password-input-container">
+        <input type="password" id="confirmPassword" placeholder="Repeat password">
+        <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword', this)">👁️</span>
+      </div>
+      <span id="passwordError" class="error-message"></span>
+    </div>
+  </div>
+</section>
+
+    <div class="journey-card">
+      <div>
+        <h3>📖 Student Journey</h3>
+        <p>Every step you take in learning brings you closer to understanding your faith — keep going and never stop growing.</p>
+        <small>“Say: Are those who know equal to those who do not know?” <br>-(Surah Az-Zumar 39:9)</small>
+      </div>
+      <img src="image/Student Journey.svg" alt="Quran">
+    </div>
+
+    <div class="buttons">
+      <button class="discard" onclick="resetForm()">Discard</button>
+      <button class="save" id="saveChangesBtn" onclick="handleSaveChanges()">Save Changes</button>
+    </div>
+
+  </main>
+
+  <aside class="right-side">
+    <div class="quote-card">
+      <h3>DAILY REFLECTION</h3>
+      <p>“My Lord, increase me in knowledge.”</p>
+      <small style="display:block; margin-top:10px; opacity:0.8;">SURAH TAHA 20:114</small>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-header">
+        <h3>Your Progress</h3>
+      </div>
+      <p class="progress-subtitle">Keep growing every day.</p>
+
+      <div class="progress-block" id="progress-quran">
+        <div class="progress-item"><span>Quran</span><span class="percent-text">60%</span></div>
+        <div class="bar"><div class="fill" style="width: 60%"></div></div>
+      </div>
+
+      <div class="progress-block" id="progress-aqeedah">
+        <div class="progress-item"><span>Aqeedah</span><span class="percent-text">40%</span></div>
+        <div class="bar"><div class="fill" style="width: 40%"></div></div>
+      </div>
+
+      <div class="progress-block" id="progress-taweed">
+        <div class="progress-item"><span>Ethics</span><span class="percent-text">20%</span></div>
+        <div class="bar"><div class="fill" style="width: 20%"></div></div>
+      </div>
+
+      <div class="progress-block" id="progress-seerah">
+        <div class="progress-item"><span>Seerah</span><span class="percent-text">40%</span></div>
+        <div class="bar"><div class="fill" style="width: 40%"></div></div>
+      </div>
+
+      <div class="progress-block" id="progress-fiqh">
+        <div class="progress-item"><span>Fiqh</span><span class="percent-text">60%</span></div>
+        <div class="bar"><div class="fill" style="width: 60%"></div></div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+<div class="overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+
+<div class="feedback-dropdown" id="feedbackModal">
+  <div class="feedback-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3C12 3 8.5 7.5 8.5 10.5C8.5 12.433 10.067 14 12 14C13.933 14 15.5 12.433 15.5 10.5C15.5 7.5 12 3 12 3Z" fill="#3f5d2a"/>
+      <path d="M12 14C12 14 9 17.5 9 19.5C9 20.8807 10.1193 22 11.5 22C12.8807 22 14 20.8807 14 19.5C14 17.5 12 14 12 14Z" fill="#4D6530"/>
+    </svg>
+  </div>
+  
+  <h2>How are we doing?</h2>
+  <p class="subtitle">Your feedback helps us grow this spiritual sanctuary.</p>
+  
+  <div class="stars" id="starsContainer">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+  <div class="rating-text" id="ratingStatus">Select Rating</div>
+  
+  <textarea id="feedbackText" placeholder="Share your thoughts or suggestions..."></textarea>
+  
+  <button class="send-btn" onclick="submitFeedback()">Send Feedback</button>
+  <button class="cancel-btn" onclick="closeFeedback()">Cancel</button>
+</div>
+
+<div class="thankyou-popup" id="thankYouModal">
+  <div class="thank-icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4D6530"/>
+    </svg>
+  </div>
+  <h2>Thank you for your feedback</h2>
+  <p>Your contribution is highly appreciated.</p>
+  <button class="home-btn" onclick="resetToHome()">Back to Home</button>
+</div>
+<div class="overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+<script src="js/editprofile.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
