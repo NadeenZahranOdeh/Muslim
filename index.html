@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muslim</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
+    </div>
+  </div>
+</header>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to Muslim</h1>
+      <p class="subtitle">
+        Your spiritual guide to learning and understanding Islam with clarity and warmth
+      </p>
+
+    <div class="buttons">
+  <a href="#why-islam-section" class="btn-main">
+    Why Islam?
+    <img src="image/Why Islam.svg" class="btn-icon">
+  </a>
+  <a href="#explore-topics-section" class="btn-secondary">
+    Explore Topics
+    <img src="image/Explore Topics.svg" class="btn-icon">
+  </a>
+</div>
+
+      <div class="ayah">
+        <p class="arabic">
+         ﴾ إِنَّ الدِّينَ عِنْدَ اللَّهِ الْإِسْلَامُ ﴿
+        </p>
+        <p class="translation">
+          "We did not send down the Qur'an to you [Prophet] to cause you distress."
+        </p>
+        <span class="source">SURAH TAHA, VERSE 2</span>
+      </div>
+
+    </div>
+  </section>
+<img src="image/WhatsApp Image 2026-04-01 at 5.55.47 PM 1.png" class="sheikh">
+<!-- Chat Button -->
+<div class="chat-btn" onclick="toggleChat()">
+  💬
+</div>
+
+<!-- Chat Button -->
+<div class="chat-btn" onclick="toggleChat()">
+  💬
+</div>
+
+<!-- Chat Box -->
+<div class="chat-box" id="chatBox">
+  
+  <div class="chat-header">
+    <div>
+      <strong>Al-Hikmah AI</strong><br>
+      <small>Knowledge Assistant</small>
+    </div>
+    <span onclick="toggleChat()">✖</span>
+  </div>
+
+  <div class="chat-body" id="chatBody">
+    <p class="bot">Assalamu Alaikum 🌙<br>Ask me about Salah!</p>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Type your question...">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+</div>
+<section class="topics" id="explore-topics-section" class="topics">
+  <h2>Topics</h2>
+  <p class="topics-subtitle">
+    Explore Islamic topics and deepen your knowledge
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <img src="image/Quran.svg">
+      <div class="default-content">
+        <a href="progress.html"><h3>Quran</h3></a>
+        <p>The divine speech revealed to guide humanity toward light.</p>
+      </div>
+      <div class="hover-links">
+        <a href="progress.html"><span>Quran</span></a>
+        <a href="progress.html"><span>Tafsir</span></a>
+        <a href="progress.html"><span>Prophets Stories</span></a>
+        <a href="progress.html"><span>Tajweed</span></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image/Aqeedah.svg">
+      <div class="default-content">
+        <a href="progress.html"><h3>Aqeedah</h3></a>
+        <p>The bedrock of faith and the correct creed of a believer.</p>
+      </div>
+      <div class="hover-links">
+        <a href="progress.html"><span>Faith (Iman)</span></a>
+        <a href="progress.html"><span>Tawheed</span></a>
+        <a href="progress.html"><span>Shirk</span></a>
+        <a href="progress.html"><span>Intercession</span></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image/Ethics.svg">
+      <div class="default-content">
+        <a href="progress.html"><h3>Ethics</h3></a>
+        <p>Understanding the proper conduct and moral principles of Islam.</p>
+      </div>
+      <div class="hover-links">
+        <a href="progress.html"><span>Honesty</span></a>
+        <a href="progress.html"><span>Patience</span></a>
+        <a href="progress.html"><span>Integrity</span></a>
+        <a href="progress.html"><span>Humility</span></a>
+        <a href="progress.html"></a><span>Honoring parents</span></a>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image/Seerah.svg">
+      <div class="default-content">
+        <a href="progress.html"><h3>Seerah</h3></a>
+        <p>The inspiring biography of the Prophet Muhammad [PBUH].</p>
+      </div>
+      <div class="hover-links">
+        <a href="progress.html"><span>Prophet Muhammad</span></a>
+        <a href="progress.html"><span>Hadith Types</span></a>
+        <a href="progress.html"><span>explanation</span></a>
+        <a href="progress.html"><span>Isnad</span></a>
+
+
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="image/Fiqh.svg">
+      <div class="default-content">
+        <a href="progress.html"><h3>Fiqh</h3></a>
+        <p>Practical jurisprudence for navigating daily life with wisdom.</p>
+      </div>
+      <div class="hover-links">
+        <a href="prayerjourney.html"><span>Prayer</span></a>
+        <a href="progress.html"><span>Zakat</span></a>
+        <a href="progress.html"><span>Hajj</span></a>
+        <a href="progress.html"><span>Fasting</span></a>
+        <a href="progress.html"><span>Testimony of Faith</span></a>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section id="why-islam-section" class="why-islam">
+  <section class="why-wrapper">
+
+  <div class="why-card">
+    <h2>Why Islam?</h2>
+    <p class="quote">
+      "Verily, in the remembrance of Allah do hearts find rest."
+    </p>
+    <p class="description">
+    Islam provides a comprehensive spiritual framework that addresses the deepest questions of existence. It is a path of balance, emphasizing the harmony between the soul, the
+    intellect, and the material world. Through clear purpose, ethical conduct, and direct
+     connection with the Creator, one finds a timeless peace that transcends circumstances.
+    </p>
+
+    <div class="chips">
+      <span><img src="image/Inner Peace.svg"> Inner Peace</span>
+      <span> <img src="image/Moral Clarity.svg">Moral Clarity</span>
+      <span> <img src="image/Universal Unity.svg">Universal Unity</span>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+function toggleChat() {
+  let chat = document.getElementById("chatBox");
+  chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+}
+
+function sendMessage() {
+  let input = document.getElementById("userInput");
+  let message = input.value.toLowerCase();
+  let body = document.getElementById("chatBody");
+
+  if (message.trim() === "") return;
+
+  // عرض رسالة المستخدم
+  body.innerHTML += `<div class="user">${message}</div>`;
+
+  let response = "I didn't understand. Try asking about Salah 😊";
+
+  if (message.includes("wajibat")) {
+    response = "Wajibat Al-Salah are 8 acts like Takbeerat, Ruku, Sujood, and Tashahhud.";
+  }
+  else if (message.includes("ruku")) {
+    response = "In Ruku you say: Subhana Rabbi Al-Azeem.";
+  }
+  else if (message.includes("sujood")) {
+    response = "In Sujood you say: Subhana Rabbi Al-A'la.";
+  }
+  else if (message.includes("forget") || message.includes("mistake")) {
+    response = "If you forget something, perform Sujood Al-Sahw.";
+  }
+
+  // رد البوت
+  setTimeout(() => {
+    body.innerHTML += `<div class="bot">${response}</div>`;
+    body.scrollTop = body.scrollHeight;
+  }, 500);
+
+  input.value = "";
+}
+</script>
+<div class="feedback-blur-overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+
+<div class="feedback-dropdown" id="feedbackModal">
+  <div class="feedback-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3C12 3 8.5 7.5 8.5 10.5C8.5 12.433 10.067 14 12 14C13.933 14 15.5 12.433 15.5 10.5C15.5 7.5 12 3 12 3Z" fill="#3f5d2a"/>
+      <path d="M12 14C12 14 9 17.5 9 19.5C9 20.8807 10.1193 22 11.5 22C12.8807 22 14 20.8807 14 19.5C14 17.5 12 14 12 14Z" fill="#4D6530"/>
+      <path d="M6 10C6 10 3.5 12 3.5 14C3.5 14.8284 4.17157 15.5 5 15.5C5.82843 15.5 6.5 14.8284 6.5 14.0001C6.5 13 6 10 6 10Z" fill="#3f5d2a"/>
+      <path d="M18 10C18 10 20.5 12 20.5 14C20.5 14.8284 19.8284 15.5 19 15.5C18.1716 15.5 17.5 14.8284 17.5 14.0001C17.5 13 18 10 18 10Z" fill="#3f5d2a"/>
+    </svg>
+  </div>
+  
+  <h2>How are we doing?</h2>
+  <p class="subtitle">Your feedback helps us grow this spiritual sanctuary.</p>
+  
+  <div class="stars" id="starsContainer">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+  <div class="rating-text" id="ratingStatus">Select Rating</div>
+  
+  <textarea id="feedbackText" placeholder="Share your thoughts or suggestions..."></textarea>
+  
+  <button class="feedback-send-btn" onclick="submitFeedback()">Send Feedback</button>
+  <button class="cancel-btn" onclick="closeFeedback()">Cancel</button>
+</div>
+
+<div class="thankyou-popup" id="thankYouModal">
+  <div class="thank-icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4D6530"/>
+    </svg>
+  </div>
+  <h2>Thank you for your feedback</h2>
+  <p>Your contribution is highly appreciated.</p>
+  <button class="home-btn" onclick="resetToHome()">Back to Home</button>
+</div>
+<script src="js/index.js"></script>
+</body>
