@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seek Knowledge</title>
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Google Fonts: Noto Serif & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
+    <!-- Link to external CSS -->
+     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/Seekknowledge.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
+    </div>
+  </div>
+</header>
+      <main class="seek-knowledge-container">
+        <!-- Title Section -->
+        <div class="seek-title-section">
+          <h1 class="seek-title">Seek Knowledge</h1>
+          <p class="seek-subtitle">
+            Connect with verified scholars to deepen your understanding of<br/> faith through wisdom and authentic guidance.
+          </p>
+        </div>
+        <!-- Ask a Scholar Box -->
+        <section id="ask" class="ask-card">
+          <div class="ask-card-header">
+            <div class="ask-card-title">
+              <img src="image/Ask a Scholar.svg"/>Ask a Scholar
+            </div>
+            <div class="public-toggle-container">
+  <span class="public-toggle-label" id="toggleLabel">Public</span>
+  <label class="toggle-switch">
+    <input type="checkbox" id="publicToggle" checked />
+    <span class="toggle-slider"></span>
+  </label>
+</div>
+          </div>
+
+          <form id="askForm">
+            <div class="ask-form-group">
+              <label class="ask-form-label">Select Category</label>
+              <div class="category-select-wrapper">
+                <select class="category-select" id="categorySelect">
+                  <option value="Prayer (Salah)">Prayer (Salah)</option>
+                  <option value="Fasting (Sawm)">Fasting (Sawm)</option>
+                  <option value="Zakat & Charity">Zakat & Charity</option>
+                  <option value="Ethics & Morals">Ethics & Morals</option>
+                  <option value="Quranic Fiqh">Quranic Fiqh</option>
+                </select>
+ 
+  <img src="image/Vector.svg" class="select-arrow"> 
+</div>
+              </div>
+            </div>
+
+            <div class="ask-form-group">
+              <label class="ask-form-label">Your Question</label>
+              <textarea 
+                class="question-textarea" 
+                id="questionInput"
+                placeholder="Write your question here with as much detail as possible..."
+                maxlength="500"
+                required
+              ></textarea>
+            </div>
+
+            <div class="ask-card-footer">
+              <button type="submit" class="send-question-btn">
+                Send Question
+                <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Filter and Tab Section -->
+        <div class="filter-bar">
+          <div class="filter-dropdown-container" id="filterDropdownContainer">
+            <button class="filter-dropdown-trigger" id="filterDropdownTrigger">
+              <span id="activeTabLabel">All</span>
+              <i data-lucide="chevron-down" class="dropdown-arrow" id="dropdownArrowIcon" style="width: 16px; height: 16px;"></i>
+            </button>
+            
+            <div class="filter-dropdown-menu" id="filterDropdownMenu" style="display: none;">
+              <button class="filter-dropdown-item active" data-tab="All">All</button>
+              <button class="filter-dropdown-item" data-tab="Answered">My Answered Questions</button>
+              <button class="filter-dropdown-item" data-tab="Pending">My Pending Questions</button>
+            </div>
+          </div>
+
+          <div class="sort-select-wrapper">
+            Sorted by:
+            <select class="sort-select" id="sortSelect">
+              <option value="Newest">Newest</option>
+              <option value="Oldest">Oldest</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Questions Feed -->
+        <section class="question-feed" id="questionFeed">
+          <!-- Feed cards will be injected here via JavaScript -->
+        </section>
+
+        <!-- Load More Button -->
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+          <button class="load-more-btn" id="loadMoreBtn">
+            Load More Questions
+            <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i>
+          </button>
+        </div>
+      </main>
+    </div>
+
+  <div class="overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+
+  <div class="feedback-dropdown" id="feedbackModal">
+    <div class="feedback-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3C12 3 8.5 7.5 8.5 10.5C8.5 12.433 10.067 14 12 14C13.933 14 15.5 12.433 15.5 10.5C15.5 7.5 12 3 12 3Z" fill="#3f5d2a"/>
+        <path d="M12 14C12 14 9 17.5 9 19.5C9 20.8807 10.1193 22 11.5 22C12.8807 22 14 20.8807 14 19.5C14 17.5 12 14 12 14Z" fill="#4D6530"/>
+      </svg>
+    </div>
+    <h2>How are we doing?</h2>
+    <p class="subtitle">Your feedback helps us grow this spiritual sanctuary.</p>
+    <div class="stars" id="starsContainer">
+      <span class="star" data-value="1">★</span>
+      <span class="star" data-value="2">★</span>
+      <span class="star" data-value="3">★</span>
+      <span class="star" data-value="4">★</span>
+      <span class="star" data-value="5">★</span>
+    </div>
+    <div class="rating-text" id="ratingStatus">Select Rating</div>
+    <textarea id="feedbackText" placeholder="Share your thoughts or suggestions..."></textarea>
+    <button class="send-btn" onclick="submitFeedback()">Send Feedback</button>
+    <button class="cancel-btn" onclick="closeFeedback()">Cancel</button>
+  </div>
+
+  <div class="thankyou-popup" id="thankYouModal">
+    <div class="thank-icon">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4D6530"/>
+      </svg>
+    </div>
+    <h2>Thank you for your feedback</h2>
+    <p>Your contribution is highly appreciated.</p>
+    <button class="home-btn" onclick="resetToHome()">Back to Home</button>
+  </div>
+
+    <!-- Link to external JS -->
+    <script src="js/Seekknowledge.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
