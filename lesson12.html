@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How to Perform Salah</title>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/lesson12.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<header class="navbar">
+    <div class="logo">
+        <img src="image/logo.svg" alt="">
+    </div>
+    <nav>
+        <a href="askquastion.html">Ask Question</a>
+        <a href="javascript:void(0)" onclick="openFeedback()">Send Feedback</a>
+        <a href="MyNote.html">My Notes</a>
+        <a href="AboutMuslim.html">About Muslim</a>
+        <a href="achievement.html">Achievements</a>
+    </nav>
+    <div class="nav-buttons">
+        <a  class="btn-secondary" href="login.html">Login</a>
+        <a class="btn-primary" href="index.html"> Start Learning </a>
+        <div class="notification-wrapper">
+            <img src="image/bell.svg"
+            class="notification-icon">
+            <span class="notification-badge">
+                3
+            </span>
+        </div>
+
+        <a href="Edit Profile.html"
+        class="nav-avatar">
+            <img src="image/زينة.jpeg">
+        </a>
+    </div>
+</header>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">How to Perform Salah</h1>
+      <p class="hero-subtitle">
+        Learn the prayer step by step and understand every movement with ease.<br/>
+        A sacred journey toward spiritual connection.
+      </p>
+    </div>
+    <div class="hero-image">
+      <img src="image/Sheikh Yusuf Intro.svg" alt="Sheikh illustration" onerror="this.style.display='none'"/>
+    </div>
+  </section>
+
+  <section class="journey-section">
+    <div class="journey-header">
+      <h2 class="journey-title">The Prayer Journey</h2>
+      <p class="journey-sub">Follow the sequential path of a complete Rakat.</p>
+    </div>
+
+    <div class="carousel-wrapper">
+      <button class="carousel-arrow left" id="prevBtn" aria-label="Previous">&#8249;</button>
+
+      <div class="cards-viewport">
+        <div class="cards-track" id="cardsTrack">
+
+          <!-- Card 1 -->
+          <div class="step-card" data-step="0">
+            <div class="step-label">STEP 1 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/one.svg" alt="Step 1" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>🕌</span></div>'"/>
+            </div>
+            <h3 class="card-title">Intention</h3>
+            <p class="card-desc">silently making the intention in your heart to perform the specific prayer, then  initiate it by raising your hands and saying "Allahu Akbar" (God is the Greatest) to mark your entry into this sacred state of worship.</p>
+            <button class="btn-watch" onclick="scrollToVideo(0)">Watch Video Below ▶</button>
+          </div>
+
+           <!-- Card 2 -->
+          <div class="step-card" data-step="0">
+            <div class="step-label">STEP 2 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/two.svg" alt="Step 2" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>🕌</span></div>'"/>
+            </div>
+            <h3 class="card-title">Takbirat al-Ihram</h3>
+            <p class="card-desc">This is the opening act where you raise your hands and say "Allahu Akbar" (God is the Greatest) to initiate the prayer. It marks the transition into a state of sacred focus, forbidding worldly actions.</p>
+            <button class="btn-watch" onclick="scrollToVideo(1)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="step-card active" data-step="1">
+            <div class="step-label">STEP 3 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/three.svg" alt="Step 3" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>🤲</span></div>'"/>
+            </div>
+            <h3 class="card-title">Recitation of Al-Fatiha and a Short Surah</h3>
+            <p class="card-desc">During the standing position, you recite Surah Al-Fatiha, which is the opening chapter of the Quran, followed by any other short passage or verses from the Quran.</p>
+            <button class="btn-watch" onclick="scrollToVideo(2)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="step-card" data-step="2">
+            <div class="step-label">STEP 4 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/four.svg" alt="Step 4" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>📖</span></div>'"/>
+            </div>
+            <h3 class="card-title">Bowing (Ruku)</h3>
+            <p class="card-desc">You bow forward by placing your hands on your knees while keeping your back straight. During this position, you glorify Allah by saying "Subhana Rabbiyal-Azim" (Glory be to my Lord, the Almighty).</p>
+            <button class="btn-watch" onclick="scrollToVideo(3)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="step-card" data-step="3">
+            <div class="step-label">STEP 5 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/one.svg" alt="Step 5" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>📿</span></div>'"/>
+            </div>
+            <h3 class="card-title">Rising from Ruku (Qawmah)</h3>
+            <p class="card-desc">You return to a standing position, saying "Sami Allahu liman hamidah" (Allah hears those who praise Him). This movement signifies the transition back to a standing state of praise.</p>
+            <button class="btn-watch" onclick="scrollToVideo(4)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="step-card" data-step="4">
+            <div class="step-label">STEP 6 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/five.svg" alt="Step 6" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>🙏</span></div>'"/>
+            </div>
+            <h3 class="card-title">Prostration (Sujud)</h3>
+            <p class="card-desc">You place your forehead, nose, palms, knees, and toes on the ground in total submission. This is the closest a person can be to Allah, where you glorify Him saying "Subhana Rabbiyal-A'la" (Glory be to my Lord, the Most High).</p>
+            <button class="btn-watch" onclick="scrollToVideo(5)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="step-card" data-step="5">
+            <div class="step-label">STEP 7 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/six.svg" alt="Step 7" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>⬇️</span></div>'"/>
+            </div>
+            <h3 class="card-title">Rising from Sujud and Sitting (Tashahhud)</h3>
+            <p class="card-desc">After the second prostration, you sit to recite the Tashahhud. This is a prayer of testimony declaring the Oneness of Allah and sending blessings upon the Prophet Muhammad (peace be upon him).</p>
+            <button class="btn-watch" onclick="scrollToVideo(6)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="step-card" data-step="6">
+            <div class="step-label">STEP 8 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/sevin.svg" alt="Step 8" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>🧎</span></div>'"/>
+            </div>
+            <h3 class="card-title">Final Salutation (Taslim to the right)</h3>
+            <p class="card-desc">After the second prostration, you sit to recite the Tashahhud. This is a prayer of testimony declaring the Oneness of Allah and sending blessings upon the Prophet Muhammad (peace be upon him).</p>
+            <button class="btn-watch" onclick="scrollToVideo(7)">Watch Video Below ▶</button>
+          </div>
+
+          <!-- Card 9 -->
+          <div class="step-card" data-step="7">
+            <div class="step-label">STEP 9 OF 9</div>
+            <div class="card-image-area">
+              <img src="image/eight.svg" alt="Step 9" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><span>✋</span></div>'"/>
+            </div>
+            <h3 class="card-title">Final Salutation (Taslim to the left)</h3>
+            <p class="card-desc"> and then the left, saying "Assalamu Alaikum wa Rahmatullah" (Peace and mercy of Allah be upon you) ,to exit the state of prayer.</p>
+            <button class="btn-watch" onclick="scrollToVideo(8)">Watch Video Below ▶</button>
+          </div>
+
+        </div>
+      </div>
+      <button class="carousel-arrow right" id="nextBtn" aria-label="Next">&#8250;</button>
+    </div>
+  </section>
+
+  <section class="sheikh-section">
+    <div class="speech-bubble" id="speechBubble">
+      <p id="bubbleText">Watch carefully to understand This video covers the Preparation step in detail-including Wudu, intention, and facing the Qiblah correctly</p>
+    </div>
+    <div class="sheikh-figure">
+      <img src="image/sheikh-wave.svg" alt="Sheikh" onerror="this.style.display='none'; document.querySelector('.sheikh-fallback').style.display='flex'"/>
+      <div class="sheikh-fallback">
+        <div class="sheikh-avatar">👴</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO SECTION -->
+<section class="video-section" id="videoSection">
+    <div class="video-container">
+      <div class="video-label">Musli</div>
+      
+      <div class="video-embed" id="videoEmbed">
+        
+        <video id="mainVideoPlayer" width="100%" height="100%" controls style="object-fit: cover; border-radius: 12px;">
+          <source src="" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+        <div class="video-overlay" style="pointer-events: none;"> <div class="video-overlay-title" id="videoArabicTitle">التحضير</div>
+          <div class="video-overlay-sub" id="videoEnTitle">Preparation</div>
+          <div class="video-overlay-desc" id="videoDesc">Purification: Purify yourself by performing wudu before prayer, then stand on the prayer mat.</div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+<div class="overlay" id="feedbackOverlay" onclick="closeFeedback()"></div>
+
+<div class="feedback-dropdown" id="feedbackModal">
+  <div class="feedback-icon">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 3C12 3 8.5 7.5 8.5 10.5C8.5 12.433 10.067 14 12 14C13.933 14 15.5 12.433 15.5 10.5C15.5 7.5 12 3 12 3Z" fill="#3f5d2a"/>
+      <path d="M12 14C12 14 9 17.5 9 19.5C9 20.8807 10.1193 22 11.5 22C12.8807 22 14 20.8807 14 19.5C14 17.5 12 14 12 14Z" fill="#4D6530"/>
+    </svg>
+  </div>
+  
+  <h2>How are we doing?</h2>
+  <p class="subtitle">Your feedback helps us grow this spiritual sanctuary.</p>
+  
+  <div class="stars" id="starsContainer">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+  <div class="rating-text" id="ratingStatus">Select Rating</div>
+  
+  <textarea id="feedbackText" placeholder="Share your thoughts or suggestions..."></textarea>
+  
+  <button class="send-btn" onclick="submitFeedback()">Send Feedback</button>
+  <button class="cancel-btn" onclick="closeFeedback()">Cancel</button>
+</div>
+
+<div class="thankyou-popup" id="thankYouModal">
+  <div class="thank-icon">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#4D6530"/>
+    </svg>
+  </div>
+  <h2>Thank you for your feedback</h2>
+  <p>Your contribution is highly appreciated.</p>
+  <button class="home-btn" onclick="resetToHome()">Back to Home</button>
+</div>
+<a class="btn-ref" href="prayerjourney.html"> Return to my prayer journey page </a>
+  <script src="js/lesson12.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
