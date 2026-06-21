@@ -11,33 +11,38 @@
 </head>
 <body>
 <!-- ================= NAVBAR ================= -->
-<header class="navbar">
-    <div class="logo">
-        <img src="image/logo.svg" alt="">
-    </div>
-    <nav>
-        <a href="askquastion.html">Ask Question</a>
-        <a href="javascript:void(0)" onclick="openFeedback()">Send Feedback</a>
-        <a href="MyNote.html">My Notes</a>
-        <a href="AboutMuslim.html">About Muslim</a>
-        <a href="achievement.html">Achievements</a>
-    </nav>
-    <div class="nav-buttons">
-        <a  class="btn-secondary" href="login.html">Login</a>
-        <a class="btn-primary" href="index.html"> Start Learning </a>
-        <div class="notification-wrapper">
-            <img src="image/bell.svg"
-            class="notification-icon">
-            <span class="notification-badge">
-                3
-            </span>
-        </div>
+ <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
 
-        <a href="Edit Profile.html"
-        class="nav-avatar">
-            <img src="image/زينة.jpeg">
-        </a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
     </div>
+  </div>
 </header>
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -58,13 +63,13 @@
             <div class="info-card">
                 <h3>The Definition</h3>
                 <p>
-                    In Islam, Salah (Prayer) is a ritual act of worship that serves as a direct link between a servant and their Creator. It is not merely physical movements but a spiritual dialogue.
+                    This covers the Islamic legal status (Hukm) concerning a person who leaves prayer, detailing the distinction between intentional abandonment out of denial versus laziness, and the scholarly consensus regarding its gravity.
                 </p>
             </div>
             <div class="info-card">
-                <h3>Why We Pray</h3>
+                <h3>Why learn this level</h3>
                 <p>
-                    We pray to find peace, to express gratitude, and to seek guidance. It is a moment of stillness in a busy world, allowing our souls to breathe and realign with sacred truth.
+                    This knowledge serves as a necessary warning to protect one's faith (Iman), emphasizing the danger of neglecting this essential bond and the importance of prioritizing prayer above worldly concerns.
                 </p>
             </div>
         </div>
@@ -82,7 +87,7 @@
 <section class="video-section">
     <video controls>
         <source
-        src="video/prayer.mp4"
+        src="video/wudo.mp4"
         type="video/mp4">
 
     </video>

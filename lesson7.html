@@ -10,33 +10,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<header class="navbar">
-    <div class="logo">
-        <img src="image/logo.svg" alt="">
-    </div>
-    <nav>
-        <a href="askquastion.html">Ask Question</a>
-        <a href="javascript:void(0)" onclick="openFeedback()">Send Feedback</a>
-        <a href="MyNote.html">My Notes</a>
-        <a href="AboutMuslim.html">About Muslim</a>
-        <a href="achievement.html">Achievements</a>
-    </nav>
-    <div class="nav-buttons">
-        <a  class="btn-secondary" href="login.html">Login</a>
-        <a class="btn-primary" href="index.html"> Start Learning </a>
-        <div class="notification-wrapper">
-            <img src="image/bell.svg"
-            class="notification-icon">
-            <span class="notification-badge">
-                3
-            </span>
-        </div>
+ <header class="navbar">
+  <div class="logo">
+    <img src="image/logo.svg" alt="Logo">
+  </div>
 
-        <a href="editprofile.html"
-        class="nav-avatar">
-            <img src="image/زينة.jpeg">
-        </a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+    ☰
+  </button>
+
+  <div class="nav-container" id="navContainer">
+    <nav>
+      <a href="askquastion.html">Ask Question</a>
+      <a href="javascript:void(0)" onclick="openFeedback(); toggleMenu();">Send Feedback</a>
+      <a href="MyNote.html">My Notes</a>
+      <a href="aboutmuslim.html">About Muslim</a>
+      <a href="achievement.html">Achievements</a>
+    </nav>
+    
+    <div class="nav-buttons">
+      <a href="login.html" class="btn-secondary">Login</a>
+      <a class="btn-primary" href="index.html">Start Learning</a>
+      
+      <div class="notification-wrapper">
+        <img src="image/bell.svg" class="notification-icon" alt="Notifications">
+        <span class="notification-badge">3</span>
+      </div>
+      
+      <a href="Edit Profile.html" class="nav-avatar">
+        <img src="image/زينة.jpeg" id="navbarUserImage" alt="Profile">
+      </a>
     </div>
+  </div>
 </header>
 <!-- ================= HERO ================= -->
 <section class="hero">
