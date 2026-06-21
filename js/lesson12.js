@@ -6,72 +6,72 @@ const steps = [
     enTitle: "Preparation",
     desc: "Purification: Purify yourself by performing wudu before prayer, then stand on the prayer mat.",
     speech: "Watch carefully to understand\nThis video covers the Preparation step in detail – including Wudu, intention, and facing the Qiblah correctly",
-    videoId: null
+    videoId: "video/step1.mp4" 
   },
-  {
+ {
     index: 1,
     arabicTitle: "تكبيرة الإحرام",
     enTitle: "Opening Takbir",
     desc: "Raise both hands to your earlobes and say 'Allahu Akbar' — this is the Opening Takbir that begins the prayer.",
     speech: "Pay attention to this step\nThe Opening Takbir is the gate of prayer — say 'Allahu Akbar' clearly and with full presence of heart",
-    videoId: null
+    videoId: "video/step2.mp4" 
   },
-  {
+ {
     index: 2,
     arabicTitle: "قراءة الفاتحة",
     enTitle: "Recitation of Al-Fatiha",
     desc: "Recite Surah Al-Fatiha with proper Tajweed. It is obligatory in every rakat of prayer.",
     speech: "Listen and follow along\nAl-Fatiha is recited in every unit of prayer — learn its meaning to deepen your connection with Allah",
-    videoId: null
+    videoId: "video/step3.mp4"
   },
-  {
+ {
     index: 3,
     arabicTitle: "الركوع",
     enTitle: "Ruku (Bowing)",
     desc: "Bow down with your back straight and parallel to the ground. Say 'Subhana Rabbiyal Adheem' three times.",
     speech: "Focus on the posture here\nIn Ruku, your back must be straight and parallel to the floor — humility through the body",
-    videoId: null
+    videoId: "video/step4.mp4"
   },
-  {
+ {
     index: 4,
     arabicTitle: "الاعتدال",
     enTitle: "Rising from Ruku",
     desc: "Rise from bowing and stand fully upright. Say 'Sami Allahu liman hamidah' then 'Rabbana lakal hamd'.",
     speech: "Notice the transition carefully\nEvery movement in prayer has its own remembrance — rise slowly and with full tranquility",
-    videoId: null
+    videoId: "video/step5.mp4"
   },
-  {
+ {
     index: 5,
     arabicTitle: "السجود",
     enTitle: "Sujood",
     desc: "Prostration: Place your forehead on the ground. Seven body parts must touch the floor. Say 'Subhana Rabbiyal A'la'.",
     speech: "This is the closest position to Allah\nIn Sujood, you are at your highest — seven points connect you to the earth and the divine",
-    videoId: null
+    videoId: "video/step6.mp4" 
   },
-  {
+ {
     index: 6,
     arabicTitle: "الجلوس",
     enTitle: "Sitting Between Prostrations",
     desc: "Sit briefly between the two sujood. Say 'Rabbighfirli' — ask Allah for forgiveness before the second prostration.",
     speech: "A moment of supplication\nThis brief sit is a chance to ask Allah's forgiveness before returning to Sujood",
-    videoId: null
+    videoId: "video/step7.mp4"
   },
-  {
+ {
     index: 7,
     arabicTitle: "التشهد",
     enTitle: "Tashahhud",
     desc: "Sit after the second rakat and recite the Tashahhud. Raise your index finger and send blessings upon the Prophet ﷺ.",
     speech: "The testimony of faith\nIn Tashahhud, you bear witness that only Allah is God and Muhammad is His messenger",
-    videoId: null
+    videoId: "video/step8.mp4"
   },
-  {
-  index: 8,
-  arabicTitle:"التسليم",
-  enTitle: "Step Name",
-  desc: "Video description here.",
-  speech: "Speech bubble text\nSecond line here",
-  videoId: null
-}
+{
+    index: 8,
+    arabicTitle:"التسليم",
+    enTitle: "Taslim",
+    desc: "Turn your head to the right and then to the left, saying 'Assalamu Alaikum wa Rahmatullah'.",
+    speech: "The final peace\nConcluding your prayer by spreading peace to the right and to the left",
+    videoId: "video/step8.mp4"
+  }
 ];
 
 // ========== STATE ==========
@@ -149,32 +149,29 @@ document.addEventListener('keydown', (e) => {
 
 // ========== VIDEO SCROLL & UPDATE ==========
 function scrollToVideo(stepIndex) {
-  // Update video content
   const step = steps[stepIndex];
   videoArabicTitle.textContent = step.arabicTitle;
   videoEnTitle.textContent = step.enTitle;
   videoDesc.textContent = step.desc;
-
-  // Animate change
+  const mainVideoPlayer = document.getElementById('mainVideoPlayer');
+  if (mainVideoPlayer && step.videoId) {
+    mainVideoPlayer.src = step.videoId; 
+    mainVideoPlayer.load();           
+    mainVideoPlayer.play().catch(e => {
+      console.log("التشغيل التلقائي بحاجة إلى تفاعل أولاً من المستخدم:", e);
+    });
+  }
   const overlay = document.querySelector('.video-overlay');
-  overlay.style.opacity = '0';
-  overlay.style.transform = 'translateY(10px)';
-  setTimeout(() => {
-    overlay.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-    overlay.style.opacity = '1';
-    overlay.style.transform = 'translateY(0)';
-  }, 50);
-
-  // Smooth scroll
+  if (overlay) {
+    overlay.style.opacity = '0';
+    overlay.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      overlay.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+      overlay.style.opacity = '1';
+      overlay.style.transform = 'translateY(0)';
+    }, 50);
+  }
   videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-// ========== VIDEO PLAY BUTTON ==========
-let isPlaying = false;
-function togglePlay() {
-  isPlaying = !isPlaying;
-  const playBtn = document.getElementById('playBtn');
-  playBtn.textContent = isPlaying ? '⏸' : '▶';
 }
 
 // ========== INJECT KEYFRAMES ==========
