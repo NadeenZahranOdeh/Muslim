@@ -16,16 +16,38 @@ body {
     flex-direction: column;
     overflow-x: hidden;
 }
-
 .navbar {
+  max-width: 1250px;
+  width: 90%; 
+  margin: 10px auto 40px;
+  padding: 12px 20px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 25px;
-  margin: 10px 160px 32px 160px ; 
-  background: rgba(255, 255, 255, 0.6);
+  justify-content: space-between;
+  position: sticky;
+  top: 10px;
+  z-index: 1000; 
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
   border-radius: 999px;
-  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  margin-left: 40px;
+}
+
+.menu-toggle {
+  display: none; 
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #8F6F56;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .navbar nav {
@@ -41,7 +63,7 @@ font-family: 'Inter', sans-serif;
 font-size: 16px;
 font-style: normal;
 font-weight: 500;
-line-height: 28px;
+line-height: 25px;
 letter-spacing: -0.45px;
 text-decoration: none;
 }
@@ -475,7 +497,68 @@ text-decoration: none;
   background: #b1ab9c !important; 
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@media (max-width: 992px) {
+  .navbar {
+    border-radius: 25px; 
+    width: 95%;
+    padding: 12px 24px;
+  }
+
+  .menu-toggle {
+    display: block; 
+  }
+
+  .nav-container {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    margin: 10px 0 0 0;
+    padding: 24px;
+    gap: 20px;
+    z-index: 999;
+  }
+  .nav-container.active {
+    display: flex; 
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .navbar nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .navbar nav a {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+    align-items: center;
+    border-top: 1px solid #eee; 
+    padding-top: 16px;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 80%; 
+    text-align: center;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
